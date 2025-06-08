@@ -73,6 +73,33 @@ class LuxeHeroSection extends HTMLElement {
     }
   }
 
+  updateCSSVariables() {
+    const hostStyle = this.shadowRoot.querySelector(':host');
+    if (hostStyle) {
+      const style = this.shadowRoot.querySelector('style');
+      if (style) {
+        // Update the CSS with new variables
+        style.textContent = style.textContent.replace(
+          /:host\s*{[^}]*}/,
+          `:host {
+            --bg-color: ${this.settings.backgroundColor};
+            --text-color: ${this.settings.textColor};
+            --primary-btn: ${this.settings.primaryButtonColor};
+            --secondary-btn: ${this.settings.secondaryButtonColor};
+            --accent: ${this.settings.accentColor};
+            --title-font: ${this.settings.titleFontFamily};
+            --subtitle-font: ${this.settings.subtitleFontFamily};
+            --button-font: ${this.settings.buttonFontFamily};
+            display: block;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+          }`
+        );
+      }
+    }
+  }
+
   render() {
     this.shadowRoot.innerHTML = `
       <style>
@@ -507,6 +534,11 @@ class LuxeHeroSection extends HTMLElement {
 
   updateElement(name) {
     if (!this.shadowRoot) return;
+
+    // For color and font changes, update CSS variables
+    if (['background-color', 'text-color', 'primary-button-color', 'secondary-button-color', 'accent-color', 'title-font-family', 'subtitle-font-family', 'button-font-family'].includes(name)) {
+      this.updateCSSVariables();
+    }
 
     switch (name) {
       case 'hero-title':
