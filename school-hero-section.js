@@ -369,7 +369,7 @@ class SchoolHeroSection extends HTMLElement {
         .stats-bar {
           position: relative;
           margin-top: 3rem;
-          background: rgba(30, 58, 138, 0.95);
+          background: var(--background-color);
           backdrop-filter: blur(20px);
           border-radius: 15px;
           padding: 1.5rem;
@@ -380,12 +380,16 @@ class SchoolHeroSection extends HTMLElement {
           box-shadow: 0 10px 30px var(--shadow-color);
           max-width: 600px;
           gap: 1rem;
+          ${alignment === 'center' ? 'margin-left: auto; margin-right: auto;' : ''}
+          ${alignment === 'right' ? 'margin-left: auto; margin-right: 0;' : ''}
+          ${alignment === 'left' ? 'margin-left: 0; margin-right: auto;' : ''}
         }
 
         .stat-item {
           text-align: center;
           color: var(--text-color);
           transition: transform 0.3s ease;
+          flex: 1;
         }
 
         .stat-item:hover {
