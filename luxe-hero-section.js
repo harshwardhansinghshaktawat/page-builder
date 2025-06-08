@@ -5,7 +5,7 @@ class LuxeHeroSection extends HTMLElement {
     this.settings = {
       heroTitle: 'Redefine Your Style',
       heroSubtitle: 'Discover premium fashion pieces that blend contemporary design with timeless elegance. Curated collections for the modern lifestyle.',
-      heroBadge: '✨ New Collection 2025',
+      heroBadge: 'New Collection 2025',
       primaryButtonText: 'Shop Now',
       secondaryButtonText: 'View Collections',
       primaryButtonLink: '#shop',
@@ -20,10 +20,19 @@ class LuxeHeroSection extends HTMLElement {
       stat3Label: 'Customer Rating',
       product1Title: 'Premium Product',
       product1Price: '$299',
+      product1Description: 'Crafted with the finest materials and attention to detail, this premium piece represents the pinnacle of modern design and functionality.',
+      product1Link: '#product1',
+      product1Target: '_self',
       product2Title: 'Designer Item',
       product2Price: '$189',
+      product2Description: 'Contemporary style meets everyday comfort in this versatile piece.',
+      product2Link: '#product2',
+      product2Target: '_self',
       product3Title: 'Luxury Collection',
       product3Price: '$599',
+      product3Description: 'Exclusive limited edition piece from our luxury collection.',
+      product3Link: '#product3',
+      product3Target: '_self',
       imageUrl: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
       backgroundColor: '#0c0c0c',
       textColor: '#ffffff',
@@ -45,7 +54,9 @@ class LuxeHeroSection extends HTMLElement {
       'hero-title', 'hero-subtitle', 'hero-badge', 'primary-button-text', 'secondary-button-text',
       'primary-button-link', 'secondary-button-link', 'primary-button-target', 'secondary-button-target',
       'stat1-number', 'stat1-label', 'stat2-number', 'stat2-label', 'stat3-number', 'stat3-label',
-      'product1-title', 'product1-price', 'product2-title', 'product2-price', 'product3-title', 'product3-price',
+      'product1-title', 'product1-price', 'product1-description', 'product1-link', 'product1-target',
+      'product2-title', 'product2-price', 'product2-description', 'product2-link', 'product2-target',
+      'product3-title', 'product3-price', 'product3-description', 'product3-link', 'product3-target',
       'image-url', 'background-color', 'text-color', 'primary-button-color', 'secondary-button-color', 'accent-color',
       'title-font-family', 'subtitle-font-family', 'button-font-family',
       'title-font-size', 'subtitle-font-size', 'button-font-size'
@@ -195,7 +206,7 @@ class LuxeHeroSection extends HTMLElement {
           transition: all 0.3s ease;
           display: inline-flex;
           align-items: center;
-          gap: 0.5rem;
+          justify-content: center;
           position: relative;
           overflow: hidden;
           cursor: pointer;
@@ -284,7 +295,6 @@ class LuxeHeroSection extends HTMLElement {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 1.5rem;
-          transform-style: preserve-3d;
         }
 
         .product-card {
@@ -297,27 +307,15 @@ class LuxeHeroSection extends HTMLElement {
           position: relative;
           overflow: hidden;
           cursor: pointer;
-        }
-
-        .product-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        .product-card:hover::before {
-          opacity: 1;
+          text-decoration: none;
+          color: inherit;
+          display: block;
         }
 
         .product-card:hover {
-          transform: translateY(-10px) rotateX(5deg);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+          transform: translateY(-10px);
+          box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+          background: rgba(255, 255, 255, 0.15);
         }
 
         .product-card:nth-child(1) {
@@ -326,7 +324,7 @@ class LuxeHeroSection extends HTMLElement {
 
         .product-image {
           width: 100%;
-          height: 200px;
+          height: 150px;
           object-fit: contain;
           object-position: center;
           border-radius: 12px;
@@ -335,7 +333,7 @@ class LuxeHeroSection extends HTMLElement {
         }
 
         .product-card:nth-child(1) .product-image {
-          height: 300px;
+          height: 200px;
         }
 
         .product-title {
@@ -345,6 +343,13 @@ class LuxeHeroSection extends HTMLElement {
           color: var(--text-color);
         }
 
+        .product-description {
+          font-size: 0.9rem;
+          color: rgba(255, 255, 255, 0.7);
+          line-height: 1.4;
+          margin-bottom: 1rem;
+        }
+
         .product-price {
           font-size: 1.3rem;
           font-weight: 700;
@@ -352,53 +357,6 @@ class LuxeHeroSection extends HTMLElement {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-        }
-
-        .floating-elements {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          pointer-events: none;
-        }
-
-        .floating-icon {
-          position: absolute;
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 50%;
-          width: 60px;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.5rem;
-          backdrop-filter: blur(10px);
-          animation: floatIcon 6s ease-in-out infinite;
-        }
-
-        @keyframes floatIcon {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        .floating-icon:nth-child(1) {
-          top: 10%;
-          right: 10%;
-          animation-delay: 0s;
-        }
-
-        .floating-icon:nth-child(2) {
-          bottom: 20%;
-          left: -5%;
-          animation-delay: 2s;
-        }
-
-        .floating-icon:nth-child(3) {
-          top: 60%;
-          right: -5%;
-          animation-delay: 4s;
         }
 
         @media (max-width: 1024px) {
@@ -444,10 +402,6 @@ class LuxeHeroSection extends HTMLElement {
           .product-card:nth-child(1) {
             grid-row: span 1;
           }
-
-          .floating-icon {
-            display: none;
-          }
         }
 
         @media (max-width: 480px) {
@@ -474,11 +428,9 @@ class LuxeHeroSection extends HTMLElement {
             <div class="hero-actions">
               <a href="${this.settings.primaryButtonLink}" target="${this.settings.primaryButtonTarget}" class="cta-primary">
                 ${this.settings.primaryButtonText}
-                <span>→</span>
               </a>
               <a href="${this.settings.secondaryButtonLink}" target="${this.settings.secondaryButtonTarget}" class="cta-secondary">
                 ${this.settings.secondaryButtonText}
-                <span>👁️</span>
               </a>
             </div>
             <div class="hero-stats">
@@ -499,27 +451,24 @@ class LuxeHeroSection extends HTMLElement {
           
           <div class="hero-visual">
             <div class="product-showcase">
-              <div class="product-card">
+              <a href="${this.settings.product1Link}" target="${this.settings.product1Target}" class="product-card">
                 <img src="${this.settings.imageUrl}" alt="${this.settings.product1Title}" class="product-image">
                 <h3 class="product-title">${this.settings.product1Title}</h3>
+                <p class="product-description">${this.settings.product1Description}</p>
                 <div class="product-price">${this.settings.product1Price}</div>
-              </div>
-              <div class="product-card">
+              </a>
+              <a href="${this.settings.product2Link}" target="${this.settings.product2Target}" class="product-card">
                 <img src="${this.settings.imageUrl}" alt="${this.settings.product2Title}" class="product-image">
                 <h3 class="product-title">${this.settings.product2Title}</h3>
+                <p class="product-description">${this.settings.product2Description}</p>
                 <div class="product-price">${this.settings.product2Price}</div>
-              </div>
-              <div class="product-card">
+              </a>
+              <a href="${this.settings.product3Link}" target="${this.settings.product3Target}" class="product-card">
                 <img src="${this.settings.imageUrl}" alt="${this.settings.product3Title}" class="product-image">
                 <h3 class="product-title">${this.settings.product3Title}</h3>
+                <p class="product-description">${this.settings.product3Description}</p>
                 <div class="product-price">${this.settings.product3Price}</div>
-              </div>
-            </div>
-            
-            <div class="floating-elements">
-              <div class="floating-icon">💎</div>
-              <div class="floating-icon">⚡</div>
-              <div class="floating-icon">🎯</div>
+              </a>
             </div>
           </div>
         </div>
@@ -552,19 +501,6 @@ class LuxeHeroSection extends HTMLElement {
         }
       });
     }, 1000);
-
-    // Interactive product cards
-    this.shadowRoot.querySelectorAll('.product-card').forEach(card => {
-      card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-15px) rotateX(10deg) rotateY(5deg)';
-        this.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.3)';
-      });
-
-      card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
-        this.style.boxShadow = 'none';
-      });
-    });
   }
 
   updateElement(name) {
@@ -585,11 +521,11 @@ class LuxeHeroSection extends HTMLElement {
         break;
       case 'primary-button-text':
         const primaryBtn = this.shadowRoot.querySelector('.cta-primary');
-        if (primaryBtn) primaryBtn.innerHTML = `${this.settings.primaryButtonText}<span>→</span>`;
+        if (primaryBtn) primaryBtn.textContent = this.settings.primaryButtonText;
         break;
       case 'secondary-button-text':
         const secondaryBtn = this.shadowRoot.querySelector('.cta-secondary');
-        if (secondaryBtn) secondaryBtn.innerHTML = `${this.settings.secondaryButtonText}<span>👁️</span>`;
+        if (secondaryBtn) secondaryBtn.textContent = this.settings.secondaryButtonText;
         break;
       case 'primary-button-link':
         const primaryLink = this.shadowRoot.querySelector('.cta-primary');
@@ -645,6 +581,18 @@ class LuxeHeroSection extends HTMLElement {
         const prod1Price = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-price');
         if (prod1Price) prod1Price.textContent = this.settings.product1Price;
         break;
+      case 'product1-description':
+        const prod1Desc = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-description');
+        if (prod1Desc) prod1Desc.textContent = this.settings.product1Description;
+        break;
+      case 'product1-link':
+        const prod1Link = this.shadowRoot.querySelector('.product-card:nth-child(1)');
+        if (prod1Link) prod1Link.href = this.settings.product1Link;
+        break;
+      case 'product1-target':
+        const prod1Target = this.shadowRoot.querySelector('.product-card:nth-child(1)');
+        if (prod1Target) prod1Target.target = this.settings.product1Target;
+        break;
       case 'product2-title':
         const prod2Title = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-title');
         if (prod2Title) prod2Title.textContent = this.settings.product2Title;
@@ -653,6 +601,18 @@ class LuxeHeroSection extends HTMLElement {
         const prod2Price = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-price');
         if (prod2Price) prod2Price.textContent = this.settings.product2Price;
         break;
+      case 'product2-description':
+        const prod2Desc = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-description');
+        if (prod2Desc) prod2Desc.textContent = this.settings.product2Description;
+        break;
+      case 'product2-link':
+        const prod2Link = this.shadowRoot.querySelector('.product-card:nth-child(2)');
+        if (prod2Link) prod2Link.href = this.settings.product2Link;
+        break;
+      case 'product2-target':
+        const prod2Target = this.shadowRoot.querySelector('.product-card:nth-child(2)');
+        if (prod2Target) prod2Target.target = this.settings.product2Target;
+        break;
       case 'product3-title':
         const prod3Title = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-title');
         if (prod3Title) prod3Title.textContent = this.settings.product3Title;
@@ -660,6 +620,18 @@ class LuxeHeroSection extends HTMLElement {
       case 'product3-price':
         const prod3Price = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-price');
         if (prod3Price) prod3Price.textContent = this.settings.product3Price;
+        break;
+      case 'product3-description':
+        const prod3Desc = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-description');
+        if (prod3Desc) prod3Desc.textContent = this.settings.product3Description;
+        break;
+      case 'product3-link':
+        const prod3Link = this.shadowRoot.querySelector('.product-card:nth-child(3)');
+        if (prod3Link) prod3Link.href = this.settings.product3Link;
+        break;
+      case 'product3-target':
+        const prod3Target = this.shadowRoot.querySelector('.product-card:nth-child(3)');
+        if (prod3Target) prod3Target.target = this.settings.product3Target;
         break;
       case 'title-font-size':
         const titleEl = this.shadowRoot.querySelector('.hero-title');
