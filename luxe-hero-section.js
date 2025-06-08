@@ -21,19 +21,21 @@ class LuxeHeroSection extends HTMLElement {
       product1Title: 'Premium Product',
       product1Price: '$299',
       product1Description: 'Crafted with the finest materials and attention to detail, this premium piece represents the pinnacle of modern design and functionality.',
+      product1Image: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
       product1Link: '#product1',
       product1Target: '_self',
       product2Title: 'Designer Item',
       product2Price: '$189',
       product2Description: 'Contemporary style meets everyday comfort in this versatile piece.',
+      product2Image: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
       product2Link: '#product2',
       product2Target: '_self',
       product3Title: 'Luxury Collection',
       product3Price: '$599',
       product3Description: 'Exclusive limited edition piece from our luxury collection.',
+      product3Image: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
       product3Link: '#product3',
       product3Target: '_self',
-      imageUrl: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
       backgroundColor: '#0c0c0c',
       textColor: '#ffffff',
       primaryButtonColor: '#667eea',
@@ -54,10 +56,10 @@ class LuxeHeroSection extends HTMLElement {
       'hero-title', 'hero-subtitle', 'hero-badge', 'primary-button-text', 'secondary-button-text',
       'primary-button-link', 'secondary-button-link', 'primary-button-target', 'secondary-button-target',
       'stat1-number', 'stat1-label', 'stat2-number', 'stat2-label', 'stat3-number', 'stat3-label',
-      'product1-title', 'product1-price', 'product1-description', 'product1-link', 'product1-target',
-      'product2-title', 'product2-price', 'product2-description', 'product2-link', 'product2-target',
-      'product3-title', 'product3-price', 'product3-description', 'product3-link', 'product3-target',
-      'image-url', 'background-color', 'text-color', 'primary-button-color', 'secondary-button-color', 'accent-color',
+      'product1-title', 'product1-price', 'product1-description', 'product1-image', 'product1-link', 'product1-target',
+      'product2-title', 'product2-price', 'product2-description', 'product2-image', 'product2-link', 'product2-target',
+      'product3-title', 'product3-price', 'product3-description', 'product3-image', 'product3-link', 'product3-target',
+      'background-color', 'text-color', 'primary-button-color', 'secondary-button-color', 'accent-color',
       'title-font-family', 'subtitle-font-family', 'button-font-family',
       'title-font-size', 'subtitle-font-size', 'button-font-size'
     ];
@@ -452,19 +454,19 @@ class LuxeHeroSection extends HTMLElement {
           <div class="hero-visual">
             <div class="product-showcase">
               <a href="${this.settings.product1Link}" target="${this.settings.product1Target}" class="product-card">
-                <img src="${this.settings.imageUrl}" alt="${this.settings.product1Title}" class="product-image">
+                <img src="${this.settings.product1Image}" alt="${this.settings.product1Title}" class="product-image">
                 <h3 class="product-title">${this.settings.product1Title}</h3>
                 <p class="product-description">${this.settings.product1Description}</p>
                 <div class="product-price">${this.settings.product1Price}</div>
               </a>
               <a href="${this.settings.product2Link}" target="${this.settings.product2Target}" class="product-card">
-                <img src="${this.settings.imageUrl}" alt="${this.settings.product2Title}" class="product-image">
+                <img src="${this.settings.product2Image}" alt="${this.settings.product2Title}" class="product-image">
                 <h3 class="product-title">${this.settings.product2Title}</h3>
                 <p class="product-description">${this.settings.product2Description}</p>
                 <div class="product-price">${this.settings.product2Price}</div>
               </a>
               <a href="${this.settings.product3Link}" target="${this.settings.product3Target}" class="product-card">
-                <img src="${this.settings.imageUrl}" alt="${this.settings.product3Title}" class="product-image">
+                <img src="${this.settings.product3Image}" alt="${this.settings.product3Title}" class="product-image">
                 <h3 class="product-title">${this.settings.product3Title}</h3>
                 <p class="product-description">${this.settings.product3Description}</p>
                 <div class="product-price">${this.settings.product3Price}</div>
@@ -543,10 +545,6 @@ class LuxeHeroSection extends HTMLElement {
         const secondaryTarget = this.shadowRoot.querySelector('.cta-secondary');
         if (secondaryTarget) secondaryTarget.target = this.settings.secondaryButtonTarget;
         break;
-      case 'image-url':
-        const images = this.shadowRoot.querySelectorAll('.product-image');
-        images.forEach(img => img.src = this.settings.imageUrl);
-        break;
       // Handle stats
       case 'stat1-number':
         const stat1Num = this.shadowRoot.querySelector('.stat:nth-child(1) .stat-number');
@@ -585,6 +583,10 @@ class LuxeHeroSection extends HTMLElement {
         const prod1Desc = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-description');
         if (prod1Desc) prod1Desc.textContent = this.settings.product1Description;
         break;
+      case 'product1-image':
+        const prod1Img = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-image');
+        if (prod1Img) prod1Img.src = this.settings.product1Image;
+        break;
       case 'product1-link':
         const prod1Link = this.shadowRoot.querySelector('.product-card:nth-child(1)');
         if (prod1Link) prod1Link.href = this.settings.product1Link;
@@ -605,6 +607,10 @@ class LuxeHeroSection extends HTMLElement {
         const prod2Desc = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-description');
         if (prod2Desc) prod2Desc.textContent = this.settings.product2Description;
         break;
+      case 'product2-image':
+        const prod2Img = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-image');
+        if (prod2Img) prod2Img.src = this.settings.product2Image;
+        break;
       case 'product2-link':
         const prod2Link = this.shadowRoot.querySelector('.product-card:nth-child(2)');
         if (prod2Link) prod2Link.href = this.settings.product2Link;
@@ -624,6 +630,10 @@ class LuxeHeroSection extends HTMLElement {
       case 'product3-description':
         const prod3Desc = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-description');
         if (prod3Desc) prod3Desc.textContent = this.settings.product3Description;
+        break;
+      case 'product3-image':
+        const prod3Img = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-image');
+        if (prod3Img) prod3Img.src = this.settings.product3Image;
         break;
       case 'product3-link':
         const prod3Link = this.shadowRoot.querySelector('.product-card:nth-child(3)');
