@@ -37,18 +37,10 @@ class LuxeHeroSection extends HTMLElement {
       product3Link: '#product3',
       product3Target: '_self',
       backgroundColor: '#0c0c0c',
-      gradientColor1: '#1a1a2e',
-      gradientColor2: '#16213e',
       textColor: '#ffffff',
-      subtitleTextColor: 'rgba(255, 255, 255, 0.8)',
       primaryButtonColor: '#667eea',
       secondaryButtonColor: 'transparent',
       accentColor: '#4facfe',
-      cardBackgroundColor: 'rgba(255, 255, 255, 0.1)',
-      cardBorderColor: 'rgba(255, 255, 255, 0.2)',
-      descriptionTextColor: 'rgba(255, 255, 255, 0.7)',
-      priceGradientColor1: '#f093fb',
-      priceGradientColor2: '#f5576c',
       titleFontFamily: 'Inter',
       subtitleFontFamily: 'Inter',
       buttonFontFamily: 'Inter',
@@ -67,9 +59,7 @@ class LuxeHeroSection extends HTMLElement {
       'product1-title', 'product1-price', 'product1-description', 'product1-image', 'product1-link', 'product1-target',
       'product2-title', 'product2-price', 'product2-description', 'product2-image', 'product2-link', 'product2-target',
       'product3-title', 'product3-price', 'product3-description', 'product3-image', 'product3-link', 'product3-target',
-      'background-color', 'gradient-color1', 'gradient-color2', 'text-color', 'subtitle-text-color',
-      'primary-button-color', 'secondary-button-color', 'accent-color', 'card-background-color',
-      'card-border-color', 'description-text-color', 'price-gradient-color1', 'price-gradient-color2',
+      'background-color', 'text-color', 'primary-button-color', 'secondary-button-color', 'accent-color',
       'title-font-family', 'subtitle-font-family', 'button-font-family',
       'title-font-size', 'subtitle-font-size', 'button-font-size'
     ];
@@ -88,18 +78,10 @@ class LuxeHeroSection extends HTMLElement {
       <style>
         :host {
           --bg-color: ${this.settings.backgroundColor};
-          --gradient-color1: ${this.settings.gradientColor1};
-          --gradient-color2: ${this.settings.gradientColor2};
           --text-color: ${this.settings.textColor};
-          --subtitle-text-color: ${this.settings.subtitleTextColor};
           --primary-btn: ${this.settings.primaryButtonColor};
           --secondary-btn: ${this.settings.secondaryButtonColor};
           --accent: ${this.settings.accentColor};
-          --card-bg: ${this.settings.cardBackgroundColor};
-          --card-border: ${this.settings.cardBorderColor};
-          --description-color: ${this.settings.descriptionTextColor};
-          --price-gradient1: ${this.settings.priceGradientColor1};
-          --price-gradient2: ${this.settings.priceGradientColor2};
           --title-font: ${this.settings.titleFontFamily};
           --subtitle-font: ${this.settings.subtitleFontFamily};
           --button-font: ${this.settings.buttonFontFamily};
@@ -118,7 +100,7 @@ class LuxeHeroSection extends HTMLElement {
         .hero {
           min-height: 100vh;
           position: relative;
-          background: linear-gradient(135deg, var(--bg-color) 0%, var(--gradient-color1) 50%, var(--gradient-color2) 100%);
+          background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a2e 50%, #16213e 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -174,8 +156,8 @@ class LuxeHeroSection extends HTMLElement {
         .hero-badge {
           display: inline-block;
           padding: 0.5rem 1rem;
-          background: var(--card-bg);
-          border: 1px solid var(--card-border);
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 50px;
           font-size: 0.9rem;
           font-weight: 500;
@@ -195,7 +177,7 @@ class LuxeHeroSection extends HTMLElement {
           font-weight: 800;
           line-height: 1.1;
           margin-bottom: 1.5rem;
-          background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-btn) 50%, var(--accent) 100%);
+          background: linear-gradient(135deg, #ffffff 0%, var(--primary-btn) 50%, var(--accent) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -204,7 +186,7 @@ class LuxeHeroSection extends HTMLElement {
         .hero-subtitle {
           font-family: var(--subtitle-font), sans-serif;
           font-size: ${this.settings.subtitleFontSize};
-          color: var(--subtitle-text-color);
+          color: rgba(255, 255, 255, 0.8);
           line-height: 1.6;
           margin-bottom: 2.5rem;
           max-width: 500px;
@@ -259,16 +241,16 @@ class LuxeHeroSection extends HTMLElement {
         }
 
         .cta-secondary {
-          background: var(--secondary-btn);
+          background: transparent;
           color: var(--text-color);
-          border: 2px solid var(--card-border);
+          border: 2px solid rgba(255, 255, 255, 0.2);
           backdrop-filter: blur(10px);
         }
 
         .cta-secondary:hover {
-          background: var(--card-bg);
+          background: rgba(255, 255, 255, 0.1);
           transform: translateY(-3px);
-          border-color: var(--card-border);
+          border-color: rgba(255, 255, 255, 0.4);
         }
 
         .hero-stats {
@@ -291,7 +273,7 @@ class LuxeHeroSection extends HTMLElement {
 
         .stat-label {
           font-size: 0.9rem;
-          color: var(--subtitle-text-color);
+          color: rgba(255, 255, 255, 0.8);
         }
 
         .hero-visual {
@@ -318,8 +300,8 @@ class LuxeHeroSection extends HTMLElement {
         }
 
         .product-card {
-          background: var(--card-bg);
-          border: 1px solid var(--card-border);
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
           border-radius: 20px;
           padding: 1.5rem;
           backdrop-filter: blur(20px);
@@ -335,8 +317,7 @@ class LuxeHeroSection extends HTMLElement {
         .product-card:hover {
           transform: translateY(-10px);
           box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
-          background: var(--card-bg);
-          opacity: 0.9;
+          background: rgba(255, 255, 255, 0.15);
         }
 
         .product-card:nth-child(1) {
@@ -350,7 +331,7 @@ class LuxeHeroSection extends HTMLElement {
           object-position: center;
           border-radius: 12px;
           margin-bottom: 1rem;
-          background: var(--card-bg);
+          background: rgba(255, 255, 255, 0.05);
         }
 
         .product-card:nth-child(1) .product-image {
@@ -366,7 +347,7 @@ class LuxeHeroSection extends HTMLElement {
 
         .product-description {
           font-size: 0.9rem;
-          color: var(--description-color);
+          color: rgba(255, 255, 255, 0.7);
           line-height: 1.4;
           margin-bottom: 1rem;
         }
@@ -374,7 +355,7 @@ class LuxeHeroSection extends HTMLElement {
         .product-price {
           font-size: 1.3rem;
           font-weight: 700;
-          background: linear-gradient(135deg, var(--price-gradient1) 0%, var(--price-gradient2) 100%);
+          background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -506,18 +487,10 @@ class LuxeHeroSection extends HTMLElement {
         /:host\s*{[^}]*}/,
         `:host {
           --bg-color: ${this.settings.backgroundColor};
-          --gradient-color1: ${this.settings.gradientColor1};
-          --gradient-color2: ${this.settings.gradientColor2};
           --text-color: ${this.settings.textColor};
-          --subtitle-text-color: ${this.settings.subtitleTextColor};
           --primary-btn: ${this.settings.primaryButtonColor};
           --secondary-btn: ${this.settings.secondaryButtonColor};
           --accent: ${this.settings.accentColor};
-          --card-bg: ${this.settings.cardBackgroundColor};
-          --card-border: ${this.settings.cardBorderColor};
-          --description-color: ${this.settings.descriptionTextColor};
-          --price-gradient1: ${this.settings.priceGradientColor1};
-          --price-gradient2: ${this.settings.priceGradientColor2};
           --title-font: ${this.settings.titleFontFamily};
           --subtitle-font: ${this.settings.subtitleFontFamily};
           --button-font: ${this.settings.buttonFontFamily};
