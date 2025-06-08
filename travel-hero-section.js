@@ -3,18 +3,16 @@ class TravelHeroSection extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.settings = {
-      heroTitle: 'ENJOY',
-      heroSubtitle: 'Travelling moment',
-      leftTitle: 'Best guide for you',
-      leftSubtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum feugiat purus, vitae finibus eros convallis id.',
-      primaryButtonText: 'Explore',
-      secondaryButtonText: 'See more',
+      heroTitle: 'Discover Amazing Places',
+      heroSubtitle: 'Create unforgettable memories with our carefully curated travel experiences designed for modern explorers.',
+      primaryButtonText: 'Start Exploring',
+      secondaryButtonText: 'Learn More',
       primaryButtonLink: '#explore',
-      secondaryButtonLink: '#see-more',
+      secondaryButtonLink: '#learn',
       primaryButtonTarget: '_self',
       secondaryButtonTarget: '_self',
       imageUrl: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
-      imageAlt: 'Traveler with arms raised',
+      imageAlt: 'Travel explorer',
       backgroundColor: '#1a3b3a',
       textColor: '#ffffff',
       primaryButtonColor: '#d4875c',
@@ -23,8 +21,8 @@ class TravelHeroSection extends HTMLElement {
       titleFontFamily: 'Montserrat',
       subtitleFontFamily: 'Open Sans',
       buttonFontFamily: 'Montserrat',
-      titleFontSize: '64px',
-      subtitleFontSize: '18px',
+      titleFontSize: '56px',
+      subtitleFontSize: '20px',
       buttonFontSize: '16px'
     };
     this.render();
@@ -32,12 +30,11 @@ class TravelHeroSection extends HTMLElement {
 
   static get observedAttributes() {
     return [
-      'hero-title', 'hero-subtitle', 'left-title', 'left-subtitle',
-      'primary-button-text', 'secondary-button-text', 'primary-button-link', 'secondary-button-link',
-      'primary-button-target', 'secondary-button-target', 'image-url', 'image-alt',
-      'background-color', 'text-color', 'primary-button-color', 'secondary-button-color', 'accent-color',
-      'title-font-family', 'subtitle-font-family', 'button-font-family',
-      'title-font-size', 'subtitle-font-size', 'button-font-size'
+      'hero-title', 'hero-subtitle', 'primary-button-text', 'secondary-button-text',
+      'primary-button-link', 'secondary-button-link', 'primary-button-target', 'secondary-button-target',
+      'image-url', 'image-alt', 'background-color', 'text-color', 'primary-button-color', 
+      'secondary-button-color', 'accent-color', 'title-font-family', 'subtitle-font-family', 
+      'button-font-family', 'title-font-size', 'subtitle-font-size', 'button-font-size'
     ];
   }
 
@@ -63,9 +60,8 @@ class TravelHeroSection extends HTMLElement {
           --button-font: ${this.settings.buttonFontFamily};
           display: block;
           width: 100%;
-          height: 100vh;
+          min-height: 100vh;
           position: relative;
-          overflow: hidden;
         }
 
         * {
@@ -76,228 +72,135 @@ class TravelHeroSection extends HTMLElement {
 
         .hero-container {
           width: 100%;
-          height: 100vh;
-          background: linear-gradient(135deg, var(--bg-color) 0%, #2d5a4f 50%, #1a3b3a 100%);
-          position: relative;
-          display: flex;
+          min-height: 100vh;
+          background: linear-gradient(135deg, var(--bg-color) 0%, #2d5a4f 100%);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
           align-items: center;
+          position: relative;
           color: var(--text-color);
           overflow: hidden;
         }
 
-        .background-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: radial-gradient(circle at 30% 70%, rgba(212, 135, 92, 0.1) 0%, transparent 50%),
-                      radial-gradient(circle at 70% 30%, rgba(45, 90, 79, 0.3) 0%, transparent 50%);
-          z-index: 1;
-        }
-
-        .content-wrapper {
-          width: 100%;
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 3rem;
-          display: grid;
-          grid-template-columns: 1fr auto 1fr;
-          gap: 4rem;
-          align-items: center;
+        .content-section {
+          padding: 4rem;
           z-index: 10;
           position: relative;
-        }
-
-        .left-content {
-          text-align: left;
-          opacity: 0;
-          transform: translateX(-50px);
-          animation: slideInLeft 1s ease-out 0.3s forwards;
-        }
-
-        .left-title {
-          font-family: var(--title-font), sans-serif;
-          font-size: 28px;
-          font-weight: 600;
-          margin-bottom: 1rem;
-          color: var(--accent);
-          position: relative;
-        }
-
-        .left-title::after {
-          content: '+';
-          margin-left: 0.5rem;
-          font-size: 24px;
-          color: var(--accent);
-        }
-
-        .left-subtitle {
-          font-family: var(--subtitle-font), sans-serif;
-          font-size: ${this.settings.subtitleFontSize};
-          line-height: 1.6;
-          opacity: 0.9;
-          max-width: 350px;
-        }
-
-        .center-image {
-          position: relative;
-          opacity: 0;
-          transform: scale(0.8);
-          animation: scaleIn 1s ease-out 0.5s forwards;
-        }
-
-        .hero-image {
-          width: auto;
-          height: 400px;
-          max-width: 300px;
-          object-fit: contain;
-          filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-        }
-
-        .right-content {
-          text-align: right;
-          opacity: 0;
-          transform: translateX(50px);
-          animation: slideInRight 1s ease-out 0.7s forwards;
+          max-width: 600px;
         }
 
         .hero-title {
           font-family: var(--title-font), sans-serif;
           font-size: ${this.settings.titleFontSize};
-          font-weight: 900;
-          color: var(--accent);
-          margin-bottom: 0.5rem;
-          letter-spacing: 2px;
+          font-weight: 700;
+          line-height: 1.2;
+          margin-bottom: 1.5rem;
+          color: var(--text-color);
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fadeInUp 0.8s ease-out 0.2s forwards;
         }
 
         .hero-subtitle {
-          font-family: var(--title-font), sans-serif;
-          font-size: 32px;
-          font-weight: 400;
-          margin-bottom: 2rem;
-          color: var(--text-color);
-        }
-
-        .hero-description {
           font-family: var(--subtitle-font), sans-serif;
           font-size: ${this.settings.subtitleFontSize};
+          font-weight: 400;
           line-height: 1.6;
           margin-bottom: 2.5rem;
           opacity: 0.9;
-          max-width: 350px;
-          margin-left: auto;
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fadeInUp 0.8s ease-out 0.4s forwards;
         }
 
         .hero-buttons {
           display: flex;
           gap: 1.5rem;
-          justify-content: flex-end;
-          flex-wrap: wrap;
+          opacity: 0;
+          transform: translateY(30px);
+          animation: fadeInUp 0.8s ease-out 0.6s forwards;
         }
 
         .btn {
           font-family: var(--button-font), sans-serif;
           font-size: ${this.settings.buttonFontSize};
-          font-weight: 500;
+          font-weight: 600;
           padding: 1rem 2rem;
           text-decoration: none;
           cursor: pointer;
-          border-radius: 6px;
+          border: none;
+          border-radius: 50px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          transition: all 0.3s ease;
-          min-width: 120px;
+          position: relative;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          min-width: 160px;
         }
 
         .btn-primary {
           background: var(--primary-btn);
           color: white;
-          border: 2px solid var(--primary-btn);
+          box-shadow: 0 8px 25px rgba(212, 135, 92, 0.3);
         }
 
         .btn-primary:hover {
-          background: transparent;
-          color: var(--primary-btn);
-          transform: translateY(-2px);
+          transform: translateY(-3px);
+          box-shadow: 0 12px 35px rgba(212, 135, 92, 0.4);
         }
 
         .btn-secondary {
           background: transparent;
           color: var(--text-color);
-          border: 2px solid var(--text-color);
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-          background: var(--text-color);
-          color: var(--bg-color);
-          transform: translateY(-2px);
-        }
-
-        .decorative-dots {
-          position: absolute;
-          left: 2rem;
-          top: 50%;
-          transform: translateY(-50%);
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          z-index: 20;
-        }
-
-        .dot {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          border: 2px solid rgba(255, 255, 255, 0.5);
-          transition: all 0.3s ease;
-        }
-
-        .dot.active {
-          background: var(--accent);
           border-color: var(--accent);
+          background: rgba(212, 135, 92, 0.1);
+          transform: translateY(-3px);
         }
 
-        .social-icons {
-          position: absolute;
-          bottom: 2rem;
-          right: 2rem;
-          display: flex;
-          gap: 1rem;
-          z-index: 20;
-        }
-
-        .social-icon {
-          width: 40px;
-          height: 40px;
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
+        .image-section {
+          height: 100vh;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--text-color);
-          text-decoration: none;
-          transition: all 0.3s ease;
-          font-size: 18px;
+          position: relative;
+          background: linear-gradient(45deg, rgba(45, 90, 79, 0.3) 0%, rgba(212, 135, 92, 0.1) 100%);
         }
 
-        .social-icon:hover {
-          background: var(--accent);
-          transform: translateY(-2px);
+        .hero-image {
+          width: auto;
+          height: 70vh;
+          max-width: 80%;
+          object-fit: contain;
+          object-position: center;
+          opacity: 0;
+          transform: scale(0.9);
+          animation: scaleIn 1s ease-out 0.3s forwards;
+          filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
         }
 
-        @keyframes slideInLeft {
+        .background-accent {
+          position: absolute;
+          top: -10%;
+          right: -10%;
+          width: 40%;
+          height: 120%;
+          background: linear-gradient(45deg, var(--accent), transparent);
+          opacity: 0.1;
+          border-radius: 50%;
+          z-index: 1;
+        }
+
+        @keyframes fadeInUp {
           to {
             opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes slideInRight {
-          to {
-            opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
           }
         }
 
@@ -308,30 +211,25 @@ class TravelHeroSection extends HTMLElement {
           }
         }
 
-        @media (max-width: 1200px) {
-          .content-wrapper {
+        @media (max-width: 1024px) {
+          .hero-container {
             grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto;
+            grid-template-rows: auto auto;
+          }
+          
+          .content-section {
+            padding: 3rem 2rem;
             text-align: center;
-            gap: 3rem;
-            padding: 2rem;
+            order: 2;
           }
-
-          .left-content,
-          .right-content {
-            text-align: center;
+          
+          .image-section {
+            height: 60vh;
+            order: 1;
           }
-
-          .hero-description {
-            margin: 0 auto 2.5rem;
-          }
-
-          .hero-buttons {
-            justify-content: center;
-          }
-
-          .decorative-dots {
-            display: none;
+          
+          .hero-image {
+            height: 50vh;
           }
         }
 
@@ -339,37 +237,23 @@ class TravelHeroSection extends HTMLElement {
           .hero-title {
             font-size: calc(${this.settings.titleFontSize} * 0.7);
           }
-
+          
           .hero-subtitle {
-            font-size: 24px;
+            font-size: calc(${this.settings.subtitleFontSize} * 0.9);
           }
-
-          .left-title {
-            font-size: 24px;
-          }
-
+          
           .hero-buttons {
             flex-direction: column;
             align-items: center;
           }
-
+          
           .btn {
             width: 100%;
-            max-width: 250px;
+            max-width: 280px;
           }
-
-          .content-wrapper {
-            padding: 1rem;
-            gap: 2rem;
-          }
-
-          .hero-image {
-            height: 300px;
-          }
-
-          .social-icons {
-            bottom: 1rem;
-            right: 1rem;
+          
+          .content-section {
+            padding: 2rem 1.5rem;
           }
         }
 
@@ -377,60 +261,42 @@ class TravelHeroSection extends HTMLElement {
           .hero-title {
             font-size: calc(${this.settings.titleFontSize} * 0.5);
           }
-
+          
           .hero-subtitle {
-            font-size: 20px;
+            font-size: calc(${this.settings.subtitleFontSize} * 0.8);
           }
-
-          .left-title {
-            font-size: 20px;
+          
+          .image-section {
+            height: 50vh;
           }
-
+          
           .hero-image {
-            height: 250px;
+            height: 40vh;
+          }
+          
+          .content-section {
+            padding: 2rem 1rem;
           }
         }
       </style>
 
       <div class="hero-container">
-        <div class="background-overlay"></div>
+        <div class="content-section">
+          <h1 class="hero-title">${this.settings.heroTitle}</h1>
+          <p class="hero-subtitle">${this.settings.heroSubtitle}</p>
+          <div class="hero-buttons">
+            <a href="${this.settings.primaryButtonLink}" target="${this.settings.primaryButtonTarget}" class="btn btn-primary">
+              ${this.settings.primaryButtonText}
+            </a>
+            <a href="${this.settings.secondaryButtonLink}" target="${this.settings.secondaryButtonTarget}" class="btn btn-secondary">
+              ${this.settings.secondaryButtonText}
+            </a>
+          </div>
+        </div>
         
-        <div class="decorative-dots">
-          <div class="dot active"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-
-        <div class="content-wrapper">
-          <div class="left-content">
-            <h3 class="left-title">${this.settings.leftTitle}</h3>
-            <p class="left-subtitle">${this.settings.leftSubtitle}</p>
-          </div>
-
-          <div class="center-image">
-            <img src="${this.settings.imageUrl}" alt="${this.settings.imageAlt}" class="hero-image" loading="lazy">
-          </div>
-
-          <div class="right-content">
-            <h1 class="hero-title">${this.settings.heroTitle}</h1>
-            <h2 class="hero-subtitle">${this.settings.heroSubtitle}</h2>
-            <p class="hero-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum feugiat purus, vitae finibus eros convallis id. Quisque tristique dui sed vulputate fringilla.</p>
-            <div class="hero-buttons">
-              <a href="${this.settings.primaryButtonLink}" target="${this.settings.primaryButtonTarget}" class="btn btn-primary">
-                ${this.settings.primaryButtonText}
-              </a>
-              <a href="${this.settings.secondaryButtonLink}" target="${this.settings.secondaryButtonTarget}" class="btn btn-secondary">
-                ${this.settings.secondaryButtonText}
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="social-icons">
-          <a href="#" class="social-icon">📷</a>
-          <a href="#" class="social-icon">🐦</a>
-          <a href="#" class="social-icon">📘</a>
+        <div class="image-section">
+          <div class="background-accent"></div>
+          <img src="${this.settings.imageUrl}" alt="${this.settings.imageAlt}" class="hero-image" loading="lazy">
         </div>
       </div>
     `;
@@ -447,14 +313,6 @@ class TravelHeroSection extends HTMLElement {
       case 'hero-subtitle':
         const subtitle = this.shadowRoot.querySelector('.hero-subtitle');
         if (subtitle) subtitle.textContent = this.settings.heroSubtitle;
-        break;
-      case 'left-title':
-        const leftTitle = this.shadowRoot.querySelector('.left-title');
-        if (leftTitle) leftTitle.textContent = this.settings.leftTitle;
-        break;
-      case 'left-subtitle':
-        const leftSubtitle = this.shadowRoot.querySelector('.left-subtitle');
-        if (leftSubtitle) leftSubtitle.textContent = this.settings.leftSubtitle;
         break;
       case 'primary-button-text':
         const primaryBtn = this.shadowRoot.querySelector('.btn-primary');
@@ -489,12 +347,12 @@ class TravelHeroSection extends HTMLElement {
         if (imageAlt) imageAlt.alt = this.settings.imageAlt;
         break;
       case 'title-font-family':
-        const titleEls = this.shadowRoot.querySelectorAll('.hero-title, .left-title');
-        titleEls.forEach(el => el.style.fontFamily = `${this.settings.titleFontFamily}, sans-serif`);
+        const titleEl = this.shadowRoot.querySelector('.hero-title');
+        if (titleEl) titleEl.style.fontFamily = `${this.settings.titleFontFamily}, sans-serif`;
         break;
       case 'subtitle-font-family':
-        const subtitleEls = this.shadowRoot.querySelectorAll('.hero-subtitle, .left-subtitle, .hero-description');
-        subtitleEls.forEach(el => el.style.fontFamily = `${this.settings.subtitleFontFamily}, sans-serif`);
+        const subtitleEl = this.shadowRoot.querySelector('.hero-subtitle');
+        if (subtitleEl) subtitleEl.style.fontFamily = `${this.settings.subtitleFontFamily}, sans-serif`;
         break;
       case 'button-font-family':
         const buttons = this.shadowRoot.querySelectorAll('.btn');
@@ -505,8 +363,8 @@ class TravelHeroSection extends HTMLElement {
         if (titleSize) titleSize.style.fontSize = this.settings.titleFontSize;
         break;
       case 'subtitle-font-size':
-        const subtitleSize = this.shadowRoot.querySelectorAll('.left-subtitle, .hero-description');
-        subtitleSize.forEach(el => el.style.fontSize = this.settings.subtitleFontSize);
+        const subtitleSize = this.shadowRoot.querySelector('.hero-subtitle');
+        if (subtitleSize) subtitleSize.style.fontSize = this.settings.subtitleFontSize;
         break;
       case 'button-font-size':
         const btnSize = this.shadowRoot.querySelectorAll('.btn');
