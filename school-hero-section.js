@@ -115,7 +115,8 @@ class SchoolHeroSection extends HTMLElement {
           
           display: block;
           width: 100%;
-          min-height: 100vh;
+          min-height: 60vh;
+          height: auto;
           position: relative;
           overflow: hidden;
         }
@@ -127,11 +128,13 @@ class SchoolHeroSection extends HTMLElement {
         }
 
         .hero-container {
-          min-height: 100vh;
+          min-height: 60vh;
+          height: auto;
           background: var(--primary-gradient);
           position: relative;
           display: flex;
           flex-direction: column;
+          padding: 4rem 0 2rem 0;
         }
 
         .floating-elements {
@@ -189,13 +192,16 @@ class SchoolHeroSection extends HTMLElement {
           padding: 0 5%;
           position: relative;
           z-index: 5;
+          min-height: 400px;
         }
 
         .content-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 4rem;
+          gap: 3rem;
           width: 100%;
+          max-width: 1400px;
+          margin: 0 auto;
           align-items: center;
         }
 
@@ -361,19 +367,19 @@ class SchoolHeroSection extends HTMLElement {
         }
 
         .stats-bar {
-          position: absolute;
-          bottom: 5%;
-          left: 5%;
-          right: 5%;
+          position: relative;
+          margin-top: 3rem;
           background: rgba(30, 58, 138, 0.95);
           backdrop-filter: blur(20px);
           border-radius: 15px;
-          padding: 20px;
+          padding: 1.5rem;
           display: flex;
-          justify-content: space-around;
+          justify-content: space-between;
           z-index: 6;
           border: 1px solid var(--border-color);
           box-shadow: 0 10px 30px var(--shadow-color);
+          max-width: 600px;
+          gap: 1rem;
         }
 
         .stat-item {
@@ -404,7 +410,7 @@ class SchoolHeroSection extends HTMLElement {
 
         .scroll-indicator {
           position: absolute;
-          bottom: 30px;
+          bottom: 20px;
           left: 50%;
           transform: translateX(-50%);
           z-index: 10;
@@ -463,12 +469,42 @@ class SchoolHeroSection extends HTMLElement {
           }
         }
 
+        @media (max-width: 1024px) and (min-width: 769px) {
+          .hero-container {
+            padding: 3rem 0 2rem 0;
+          }
+
+          .content-grid {
+            gap: 2rem;
+            max-width: 900px;
+          }
+
+          .hero-content {
+            padding: 0 4%;
+          }
+
+          .stats-bar {
+            margin-top: 2.5rem;
+            max-width: 500px;
+          }
+        }
+
         @media (max-width: 768px) {
+          .hero-container {
+            padding: 2rem 0 1rem 0;
+            min-height: 50vh;
+          }
+
           .content-grid {
             grid-template-columns: 1fr;
             gap: 2rem;
             text-align: center;
             padding: 0 1rem;
+          }
+
+          .hero-content {
+            min-height: 300px;
+            padding: 0 3%;
           }
 
           .hero-text {
@@ -478,6 +514,7 @@ class SchoolHeroSection extends HTMLElement {
           .hero-text h1 {
             font-size: ${Math.round(this.settings.titleFontSize * 0.7)}px;
             line-height: 1.1;
+            margin-bottom: 1rem;
           }
 
           .hero-text p {
@@ -485,6 +522,7 @@ class SchoolHeroSection extends HTMLElement {
             font-size: ${Math.round(this.settings.subtitleFontSize * 0.9)}px;
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 1.5rem;
           }
 
           .hero-buttons {
@@ -501,25 +539,25 @@ class SchoolHeroSection extends HTMLElement {
           }
 
           .stats-bar {
-            position: relative;
-            bottom: auto;
-            margin: 2rem 1rem 0;
+            margin-top: 2rem;
             flex-direction: column;
             gap: 1rem;
             text-align: center;
+            max-width: 100%;
+            padding: 1rem;
           }
 
           .image-container {
             transform: none;
-            margin: 0 1rem;
+            margin: 0;
           }
 
           .image-container:hover {
             transform: translateY(-5px);
           }
 
-          .hero-content {
-            padding: 2rem 0;
+          .scroll-indicator {
+            bottom: 15px;
           }
         }
 
@@ -567,6 +605,25 @@ class SchoolHeroSection extends HTMLElement {
                   ${this.settings.secondaryButtonText}
                 </a>
               </div>
+              
+              <section class="stats-bar" aria-label="School statistics and achievements">
+                <div class="stat-item">
+                  <span class="stat-number">${this.settings.stat1Number}</span>
+                  <span class="stat-label">${this.settings.stat1Label}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">${this.settings.stat2Number}</span>
+                  <span class="stat-label">${this.settings.stat2Label}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">${this.settings.stat3Number}</span>
+                  <span class="stat-label">${this.settings.stat3Label}</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number">${this.settings.stat4Number}</span>
+                  <span class="stat-label">${this.settings.stat4Label}</span>
+                </div>
+              </section>
             </div>
             <div class="hero-image">
               <div class="image-container">
@@ -574,25 +631,6 @@ class SchoolHeroSection extends HTMLElement {
                 <div class="image-overlay" aria-hidden="true"></div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section class="stats-bar" aria-label="School statistics and achievements">
-          <div class="stat-item">
-            <span class="stat-number">${this.settings.stat1Number}</span>
-            <span class="stat-label">${this.settings.stat1Label}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">${this.settings.stat2Number}</span>
-            <span class="stat-label">${this.settings.stat2Label}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">${this.settings.stat3Number}</span>
-            <span class="stat-label">${this.settings.stat3Label}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">${this.settings.stat4Number}</span>
-            <span class="stat-label">${this.settings.stat4Label}</span>
           </div>
         </section>
 
