@@ -13,19 +13,20 @@ class HeroImageSection extends HTMLElement {
       secondaryButtonTarget: '_self',
       imageUrl: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
       imageAlt: 'Professional person',
-      backgroundColor: '#0a0a23',
+      backgroundColor: '#0f0f23',
       textColor: '#ffffff',
-      primaryButtonColor: '#ff6b6b',
+      primaryButtonColor: '#6366f1',
       secondaryButtonColor: 'transparent',
-      accentColor: '#4ecdc4',
-      titleFontFamily: 'Montserrat',
-      subtitleFontFamily: 'Open Sans',
-      buttonFontFamily: 'Roboto',
-      titleFontSize: '52px',
-      subtitleFontSize: '20px',
+      accentColor: '#22d3ee',
+      titleFontFamily: 'Inter',
+      subtitleFontFamily: 'Inter',
+      buttonFontFamily: 'Inter',
+      titleFontSize: '72px',
+      subtitleFontSize: '24px',
       buttonFontSize: '18px'
     };
     this.render();
+    this.loadGSAP();
   }
 
   static get observedAttributes() {
@@ -44,6 +45,143 @@ class HeroImageSection extends HTMLElement {
       this.settings[key] = newValue || this.settings[key];
       this.updateElement(name);
     }
+  }
+
+  loadGSAP() {
+    if (window.gsap) {
+      this.initAnimations();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
+    script.onload = () => {
+      this.initAnimations();
+    };
+    document.head.appendChild(script);
+  }
+
+  initAnimations() {
+    if (!window.gsap) return;
+
+    const tl = window.gsap.timeline();
+    
+    // Set initial states
+    window.gsap.set(this.shadowRoot.querySelector('.hero-title'), { 
+      opacity: 0, 
+      y: 100, 
+      scale: 0.8 
+    });
+    
+    window.gsap.set(this.shadowRoot.querySelector('.hero-subtitle'), { 
+      opacity: 0, 
+      y: 50 
+    });
+    
+    window.gsap.set(this.shadowRoot.querySelectorAll('.btn'), { 
+      opacity: 0, 
+      y: 30, 
+      scale: 0.9 
+    });
+    
+    window.gsap.set(this.shadowRoot.querySelector('.hero-image'), { 
+      opacity: 0, 
+      x: 100, 
+      scale: 0.8 
+    });
+
+    // Animate elements in sequence
+    tl.to(this.shadowRoot.querySelector('.hero-title'), { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1, 
+      duration: 1.2, 
+      ease: "back.out(1.7)" 
+    })
+    .to(this.shadowRoot.querySelector('.hero-subtitle'), { 
+      opacity: 1, 
+      y: 0, 
+      duration: 0.8, 
+      ease: "power2.out" 
+    }, "-=0.6")
+    .to(this.shadowRoot.querySelectorAll('.btn'), { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1, 
+      duration: 0.6, 
+      stagger: 0.2, 
+      ease: "power2.out" 
+    }, "-=0.4")
+    .to(this.shadowRoot.querySelector('.hero-image'), { 
+      opacity: 1, 
+      x: 0, 
+      scale: 1, 
+      duration: 1, 
+      ease: "power2.out" 
+    }, "-=0.8");
+
+    // Add button hover animations
+    const primaryBtn = this.shadowRoot.querySelector('.btn-primary');
+    const secondaryBtn = this.shadowRoot.querySelector('.btn-secondary');
+
+    if (primaryBtn) {
+      primaryBtn.addEventListener('mouseenter', () => {
+        window.gsap.to(primaryBtn, { 
+          scale: 1.05, 
+          y: -5, 
+          duration: 0.3, 
+          ease: "power2.out" 
+        });
+        window.gsap.to(primaryBtn.querySelector('.btn-glow'), { 
+          scale: 1.2, 
+          opacity: 0.8, 
+          duration: 0.3 
+        });
+      });
+
+      primaryBtn.addEventListener('mouseleave', () => {
+        window.gsap.to(primaryBtn, { 
+          scale: 1, 
+          y: 0, 
+          duration: 0.3, 
+          ease: "power2.out" 
+        });
+        window.gsap.to(primaryBtn.querySelector('.btn-glow'), { 
+          scale: 1, 
+          opacity: 0.6, 
+          duration: 0.3 
+        });
+      });
+    }
+
+    if (secondaryBtn) {
+      secondaryBtn.addEventListener('mouseenter', () => {
+        window.gsap.to(secondaryBtn, { 
+          scale: 1.05, 
+          y: -5, 
+          duration: 0.3, 
+          ease: "power2.out" 
+        });
+      });
+
+      secondaryBtn.addEventListener('mouseleave', () => {
+        window.gsap.to(secondaryBtn, { 
+          scale: 1, 
+          y: 0, 
+          duration: 0.3, 
+          ease: "power2.out" 
+        });
+      });
+    }
+
+    // Image float animation
+    window.gsap.to(this.shadowRoot.querySelector('.hero-image'), {
+      y: -20,
+      duration: 3,
+      ease: "power2.inOut",
+      yoyo: true,
+      repeat: -1
+    });
   }
 
   render() {
@@ -76,116 +214,117 @@ class HeroImageSection extends HTMLElement {
           min-height: 100vh;
           background: var(--bg-color);
           background-image: 
-            linear-gradient(135deg, var(--bg-color) 0%, rgba(78, 205, 196, 0.1) 100%),
-            radial-gradient(circle at 80% 20%, var(--accent) 0%, transparent 50%),
-            radial-gradient(circle at 20% 80%, var(--primary-btn) 0%, transparent 50%);
+            linear-gradient(135deg, var(--bg-color) 0%, #1a1a3a 100%);
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1.2fr 0.8fr;
           align-items: center;
           position: relative;
           color: var(--text-color);
         }
 
         .content-section {
-          padding: 4rem;
+          padding: 5rem;
           z-index: 10;
           position: relative;
         }
 
         .hero-title {
-          font-family: var(--title-font), sans-serif;
+          font-family: var(--title-font), -apple-system, BlinkMacSystemFont, sans-serif;
           font-size: ${this.settings.titleFontSize};
-          font-weight: 800;
-          line-height: 1.1;
+          font-weight: 900;
+          line-height: 0.9;
           margin-bottom: 2rem;
-          background: linear-gradient(135deg, var(--text-color), var(--accent));
+          background: linear-gradient(135deg, var(--text-color) 0%, var(--accent) 50%, var(--primary-btn) 100%);
           -webkit-background-clip: text;
           background-clip: text;
           -webkit-text-fill-color: transparent;
-          transform: translateX(-50px);
-          opacity: 0;
-          animation: slideInLeft 1s ease-out 0.3s forwards;
+          letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
-          font-family: var(--subtitle-font), sans-serif;
+          font-family: var(--subtitle-font), -apple-system, BlinkMacSystemFont, sans-serif;
           font-size: ${this.settings.subtitleFontSize};
           font-weight: 400;
-          line-height: 1.7;
+          line-height: 1.5;
           margin-bottom: 3rem;
-          opacity: 0.9;
-          transform: translateX(-50px);
-          opacity: 0;
-          animation: slideInLeft 1s ease-out 0.6s forwards;
+          opacity: 0.85;
+          letter-spacing: -0.01em;
         }
 
         .hero-buttons {
           display: flex;
-          gap: 1.5rem;
+          gap: 2rem;
           flex-wrap: wrap;
-          transform: translateX(-50px);
-          opacity: 0;
-          animation: slideInLeft 1s ease-out 0.9s forwards;
         }
 
         .btn {
-          font-family: var(--button-font), sans-serif;
+          font-family: var(--button-font), -apple-system, BlinkMacSystemFont, sans-serif;
           font-size: ${this.settings.buttonFontSize};
           font-weight: 600;
-          padding: 1.2rem 2.5rem;
-          border-radius: 50px;
+          padding: 1.25rem 2.5rem;
+          border-radius: 12px;
           text-decoration: none;
-          transition: all 0.4s ease;
           cursor: pointer;
-          border: 2px solid transparent;
-          display: inline-block;
+          border: none;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           position: relative;
           overflow: hidden;
-          text-transform: uppercase;
-          letter-spacing: 1px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          letter-spacing: 0.5px;
+          min-width: 180px;
         }
 
         .btn-primary {
-          background: var(--primary-btn);
+          background: linear-gradient(135deg, var(--primary-btn) 0%, #8b5cf6 100%);
           color: white;
-          box-shadow: 0 8px 30px rgba(255, 107, 107, 0.3);
+          box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+          position: relative;
         }
 
         .btn-primary::before {
           content: '';
           position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 0;
-          height: 0;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
-          transition: width 0.6s, height 0.6s;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+          border-radius: 12px;
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
 
         .btn-primary:hover::before {
-          width: 300px;
-          height: 300px;
+          opacity: 1;
         }
 
-        .btn-primary:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+        .btn-glow {
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+          background: linear-gradient(135deg, var(--primary-btn), var(--accent));
+          border-radius: 14px;
+          z-index: -1;
+          filter: blur(10px);
+          opacity: 0.6;
         }
 
         .btn-secondary {
-          background: var(--secondary-btn);
+          background: rgba(255, 255, 255, 0.05);
           color: var(--text-color);
-          border-color: var(--accent);
-          box-shadow: 0 8px 30px rgba(78, 205, 196, 0.2);
+          border: 2px solid rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .btn-secondary:hover {
-          background: var(--accent);
-          color: white;
-          transform: translateY(-5px);
-          box-shadow: 0 15px 40px rgba(78, 205, 196, 0.4);
+          background: rgba(255, 255, 255, 0.1);
+          border-color: var(--accent);
+          box-shadow: 0 12px 40px rgba(34, 211, 238, 0.2);
         }
 
         .image-section {
@@ -198,198 +337,100 @@ class HeroImageSection extends HTMLElement {
         }
 
         .hero-image {
-          max-width: 80%;
-          max-height: 90%;
+          max-width: 85%;
+          max-height: 85%;
           object-fit: contain;
-          transform: translateX(50px) scale(0.8);
-          opacity: 0;
-          animation: slideInRight 1.2s ease-out 0.5s forwards;
-          filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+          filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
         }
 
-        .decorative-elements {
+        .background-gradient {
           position: absolute;
-          width: 100%;
-          height: 100%;
           top: 0;
           left: 0;
+          width: 100%;
+          height: 100%;
+          background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 30% 70%, rgba(34, 211, 238, 0.1) 0%, transparent 50%);
           pointer-events: none;
           z-index: 1;
         }
 
-        .floating-orb {
-          position: absolute;
-          border-radius: 50%;
-          background: linear-gradient(45deg, var(--accent), var(--primary-btn));
-          opacity: 0.6;
-          animation: float 4s ease-in-out infinite;
-        }
-
-        .orb-1 {
-          width: 100px;
-          height: 100px;
-          top: 20%;
-          left: 10%;
-          animation-delay: 0s;
-        }
-
-        .orb-2 {
-          width: 60px;
-          height: 60px;
-          top: 70%;
-          right: 20%;
-          animation-delay: 2s;
-        }
-
-        .orb-3 {
-          width: 80px;
-          height: 80px;
-          bottom: 30%;
-          left: 70%;
-          animation-delay: 1s;
-        }
-
-        .geometric-shape {
-          position: absolute;
-          border: 3px solid var(--accent);
-          opacity: 0.3;
-          animation: rotate 8s linear infinite;
-        }
-
-        .triangle {
-          width: 0;
-          height: 0;
-          border-left: 25px solid transparent;
-          border-right: 25px solid transparent;
-          border-bottom: 43px solid var(--accent);
-          top: 15%;
-          right: 15%;
-          opacity: 0.4;
-        }
-
-        .square {
-          width: 40px;
-          height: 40px;
-          background: transparent;
-          border: 2px solid var(--primary-btn);
-          top: 60%;
-          left: 5%;
-          opacity: 0.5;
-          animation: rotate 6s linear infinite reverse;
-        }
-
-        @keyframes slideInLeft {
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-
-        @keyframes slideInRight {
-          to {
-            transform: translateX(0) scale(1);
-            opacity: 1;
-          }
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) scale(1);
-          }
-          50% {
-            transform: translateY(-20px) scale(1.1);
-          }
-        }
-
-        @keyframes rotate {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
           .hero-container {
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr;
           }
           
           .content-section {
-            padding: 3rem 2rem;
+            padding: 4rem 3rem;
             text-align: center;
           }
           
           .image-section {
-            height: 60vh;
+            height: 70vh;
             order: -1;
           }
           
           .hero-image {
-            max-width: 60%;
+            max-width: 70%;
             max-height: 80%;
           }
         }
 
         @media (max-width: 768px) {
           .hero-title {
-            font-size: calc(${this.settings.titleFontSize} * 0.7);
+            font-size: calc(${this.settings.titleFontSize} * 0.6);
+            line-height: 1;
           }
           
           .hero-subtitle {
-            font-size: calc(${this.settings.subtitleFontSize} * 0.9);
+            font-size: calc(${this.settings.subtitleFontSize} * 0.85);
           }
           
           .hero-buttons {
             flex-direction: column;
             align-items: center;
+            gap: 1rem;
           }
           
           .btn {
             width: 100%;
-            max-width: 300px;
-            text-align: center;
+            max-width: 280px;
           }
           
           .content-section {
-            padding: 2rem 1rem;
-          }
-          
-          .floating-orb, .geometric-shape, .triangle, .square {
-            display: none;
+            padding: 3rem 2rem;
           }
         }
 
         @media (max-width: 480px) {
           .hero-title {
-            font-size: calc(${this.settings.titleFontSize} * 0.5);
+            font-size: calc(${this.settings.titleFontSize} * 0.4);
           }
           
           .hero-subtitle {
-            font-size: calc(${this.settings.subtitleFontSize} * 0.8);
+            font-size: calc(${this.settings.subtitleFontSize} * 0.75);
           }
           
           .image-section {
-            height: 50vh;
+            height: 60vh;
+          }
+          
+          .content-section {
+            padding: 2rem 1rem;
           }
         }
       </style>
 
       <div class="hero-container">
-        <div class="decorative-elements">
-          <div class="floating-orb orb-1"></div>
-          <div class="floating-orb orb-2"></div>
-          <div class="floating-orb orb-3"></div>
-          <div class="geometric-shape triangle"></div>
-          <div class="geometric-shape square"></div>
-        </div>
+        <div class="background-gradient"></div>
         
         <div class="content-section">
           <h1 class="hero-title">${this.settings.heroTitle}</h1>
           <p class="hero-subtitle">${this.settings.heroSubtitle}</p>
           <div class="hero-buttons">
             <a href="${this.settings.primaryButtonLink}" target="${this.settings.primaryButtonTarget}" class="btn btn-primary">
+              <div class="btn-glow"></div>
               ${this.settings.primaryButtonText}
             </a>
             <a href="${this.settings.secondaryButtonLink}" target="${this.settings.secondaryButtonTarget}" class="btn btn-secondary">
@@ -403,6 +444,9 @@ class HeroImageSection extends HTMLElement {
         </div>
       </div>
     `;
+
+    // Initialize animations after render
+    setTimeout(() => this.initAnimations(), 100);
   }
 
   updateElement(name) {
@@ -427,7 +471,9 @@ class HeroImageSection extends HTMLElement {
         break;
       case 'primary-button-text':
         const primaryBtn = this.shadowRoot.querySelector('.btn-primary');
-        if (primaryBtn) primaryBtn.textContent = this.settings.primaryButtonText;
+        if (primaryBtn) {
+          primaryBtn.innerHTML = `<div class="btn-glow"></div>${this.settings.primaryButtonText}`;
+        }
         break;
       case 'secondary-button-text':
         const secondaryBtn = this.shadowRoot.querySelector('.btn-secondary');
@@ -459,15 +505,15 @@ class HeroImageSection extends HTMLElement {
         break;
       case 'title-font-family':
         const titleEl = this.shadowRoot.querySelector('.hero-title');
-        if (titleEl) titleEl.style.fontFamily = `${this.settings.titleFontFamily}, sans-serif`;
+        if (titleEl) titleEl.style.fontFamily = `${this.settings.titleFontFamily}, -apple-system, BlinkMacSystemFont, sans-serif`;
         break;
       case 'subtitle-font-family':
         const subtitleEl = this.shadowRoot.querySelector('.hero-subtitle');
-        if (subtitleEl) subtitleEl.style.fontFamily = `${this.settings.subtitleFontFamily}, sans-serif`;
+        if (subtitleEl) subtitleEl.style.fontFamily = `${this.settings.subtitleFontFamily}, -apple-system, BlinkMacSystemFont, sans-serif`;
         break;
       case 'button-font-family':
         const buttons = this.shadowRoot.querySelectorAll('.btn');
-        buttons.forEach(btn => btn.style.fontFamily = `${this.settings.buttonFontFamily}, sans-serif`);
+        buttons.forEach(btn => btn.style.fontFamily = `${this.settings.buttonFontFamily}, -apple-system, BlinkMacSystemFont, sans-serif`);
         break;
       case 'title-font-size':
         const titleSize = this.shadowRoot.querySelector('.hero-title');
