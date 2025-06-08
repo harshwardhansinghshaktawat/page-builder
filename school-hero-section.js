@@ -1,3 +1,7 @@
+// ============================================================================
+// CUSTOM ELEMENT CODE (school-hero-section.js)
+// ============================================================================
+
 class SchoolHeroSection extends HTMLElement {
   constructor() {
     super();
@@ -13,20 +17,14 @@ class SchoolHeroSection extends HTMLElement {
       primaryButtonTarget: '_self',
       secondaryButtonTarget: '_self',
       
-      // Color Palette
-      primaryColor: '#1e40af',
-      primaryLight: '#3b82f6',
-      primaryDark: '#1e3a8a',
-      secondaryColor: '#f59e0b',
-      secondaryLight: '#fbbf24',
-      secondaryDark: '#d97706',
-      accentColor: '#dc2626',
-      accentLight: '#ef4444',
-      accentDark: '#b91c1c',
-      neutralWhite: '#ffffff',
-      neutralLight: '#f8fafc',
-      neutralDark: '#1e293b',
-      neutralBlack: '#0f172a',
+      // Simplified Color System
+      textColor: '#ffffff',
+      backgroundColor: '#1e3a8a',
+      borderColor: '#3b82f6',
+      gradient1: '#1e40af',
+      gradient2: '#dc2626',
+      gradient3: '#f59e0b',
+      accentColor: '#fbbf24',
       
       // Typography
       titleFontFamily: 'Playfair Display',
@@ -39,9 +37,9 @@ class SchoolHeroSection extends HTMLElement {
       // Layout
       heroAlignment: 'left',
       
-      // Background
-      backgroundImage: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      backgroundOpacity: 10,
+      // Image Settings
+      heroImage: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1932&q=80',
+      imageAltText: 'Students collaborating in modern classroom environment',
       
       // Stats
       stat1Number: '95%',
@@ -65,11 +63,10 @@ class SchoolHeroSection extends HTMLElement {
     return [
       'hero-title', 'hero-subtitle', 'primary-button-text', 'secondary-button-text',
       'primary-button-link', 'secondary-button-link', 'primary-button-target', 'secondary-button-target',
-      'primary-color', 'primary-light', 'primary-dark', 'secondary-color', 'secondary-light', 'secondary-dark',
-      'accent-color', 'accent-light', 'accent-dark', 'neutral-white', 'neutral-light', 'neutral-dark', 'neutral-black',
+      'text-color', 'background-color', 'border-color', 'gradient1', 'gradient2', 'gradient3', 'accent-color',
       'title-font-family', 'subtitle-font-family', 'button-font-family',
       'title-font-size', 'subtitle-font-size', 'button-font-size', 'hero-alignment',
-      'background-image', 'background-opacity', 'stat1-number', 'stat1-label', 'stat2-number', 'stat2-label',
+      'hero-image', 'image-alt-text', 'stat1-number', 'stat1-label', 'stat2-number', 'stat2-label',
       'stat3-number', 'stat3-label', 'stat4-number', 'stat4-label', 'show-stats', 'show-floating-shapes', 'show-scroll-indicator'
     ];
   }
@@ -105,30 +102,20 @@ class SchoolHeroSection extends HTMLElement {
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap');
         
         :host {
-          --primary-color: ${this.settings.primaryColor};
-          --primary-light: ${this.settings.primaryLight};
-          --primary-dark: ${this.settings.primaryDark};
-          --secondary-color: ${this.settings.secondaryColor};
-          --secondary-light: ${this.settings.secondaryLight};
-          --secondary-dark: ${this.settings.secondaryDark};
+          --text-color: ${this.settings.textColor};
+          --background-color: ${this.settings.backgroundColor};
+          --border-color: ${this.settings.borderColor};
+          --gradient1: ${this.settings.gradient1};
+          --gradient2: ${this.settings.gradient2};
+          --gradient3: ${this.settings.gradient3};
           --accent-color: ${this.settings.accentColor};
-          --accent-light: ${this.settings.accentLight};
-          --accent-dark: ${this.settings.accentDark};
-          --neutral-white: ${this.settings.neutralWhite};
-          --neutral-light: ${this.settings.neutralLight};
-          --neutral-dark: ${this.settings.neutralDark};
-          --neutral-black: ${this.settings.neutralBlack};
           
-          --gradient-1: linear-gradient(135deg, var(--primary-dark) 0%, var(--neutral-black) 100%);
-          --gradient-2: linear-gradient(45deg, var(--accent-color) 0%, var(--secondary-color) 100%);
-          --gradient-3: linear-gradient(45deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
-          --overlay-gradient: linear-gradient(45deg, rgba(30, 64, 175, 0.3), rgba(15, 23, 42, 0.3));
+          --primary-gradient: linear-gradient(135deg, var(--gradient1) 0%, var(--background-color) 100%);
+          --button-gradient: linear-gradient(45deg, var(--gradient2) 0%, var(--gradient3) 100%);
+          --highlight-gradient: linear-gradient(45deg, var(--gradient3) 0%, var(--accent-color) 100%);
           
-          --shadow-primary: rgba(30, 64, 175, 0.3);
-          --shadow-accent: rgba(220, 38, 38, 0.3);
-          --shadow-dark: rgba(0, 0, 0, 0.2);
+          --shadow-color: rgba(0, 0, 0, 0.2);
           --hover-overlay: rgba(255, 255, 255, 0.1);
-          --focus-color: var(--secondary-light);
           
           display: block;
           width: 100%;
@@ -145,22 +132,10 @@ class SchoolHeroSection extends HTMLElement {
 
         .hero-container {
           min-height: 100vh;
-          background: var(--gradient-1);
+          background: var(--primary-gradient);
           position: relative;
           display: flex;
           flex-direction: column;
-        }
-
-        .hero-container::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: url('${this.settings.backgroundImage}') center/cover;
-          opacity: ${this.settings.backgroundOpacity / 100};
-          z-index: 1;
         }
 
         .floating-elements {
@@ -237,14 +212,14 @@ class SchoolHeroSection extends HTMLElement {
           font-family: '${this.settings.titleFontFamily}', serif;
           font-size: ${this.settings.titleFontSize}px;
           font-weight: 600;
-          color: var(--neutral-white);
+          color: var(--text-color);
           line-height: 1.2;
           margin-bottom: 1.5rem;
-          text-shadow: 2px 2px 4px var(--shadow-dark);
+          text-shadow: 2px 2px 4px var(--shadow-color);
         }
 
         .hero-text .highlight {
-          background: var(--gradient-3);
+          background: var(--highlight-gradient);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -254,11 +229,12 @@ class SchoolHeroSection extends HTMLElement {
         .hero-text p {
           font-family: '${this.settings.subtitleFontFamily}', sans-serif;
           font-size: ${this.settings.subtitleFontSize}px;
-          color: var(--neutral-light);
+          color: var(--text-color);
+          opacity: 0.9;
           line-height: 1.6;
           margin-bottom: 2rem;
           max-width: 500px;
-          text-shadow: 1px 1px 2px var(--shadow-dark);
+          text-shadow: 1px 1px 2px var(--shadow-color);
           ${alignment === 'center' ? 'margin-left: auto; margin-right: auto;' : ''}
           ${alignment === 'right' ? 'margin-left: auto;' : ''}
         }
@@ -277,70 +253,96 @@ class SchoolHeroSection extends HTMLElement {
           padding: 16px 32px;
           border-radius: 50px;
           text-decoration: none;
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           display: inline-block;
           cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, var(--hover-overlay), transparent);
+          transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+          left: 100%;
         }
 
         .btn-primary {
-          background: var(--gradient-2);
+          background: var(--button-gradient);
           border: none;
-          color: var(--neutral-white);
-          box-shadow: 0 8px 25px var(--shadow-accent);
+          color: var(--text-color);
+          box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
         }
 
         .btn-primary:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 15px 35px var(--shadow-accent);
-          background: linear-gradient(45deg, var(--accent-dark) 0%, var(--secondary-dark) 100%);
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
         }
 
         .btn-primary:focus {
-          outline: 3px solid var(--focus-color);
+          outline: 3px solid var(--accent-color);
           outline-offset: 2px;
         }
 
         .btn-secondary {
           background: transparent;
-          border: 2px solid var(--neutral-white);
-          color: var(--neutral-white);
+          border: 2px solid var(--border-color);
+          color: var(--text-color);
           backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-          background: var(--neutral-white);
-          color: var(--primary-dark);
-          transform: translateY(-3px);
+          background: var(--border-color);
+          color: var(--background-color);
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 10px 25px var(--shadow-color);
         }
 
         .btn-secondary:focus {
-          outline: 3px solid var(--focus-color);
+          outline: 3px solid var(--accent-color);
           outline-offset: 2px;
         }
 
         .hero-image {
           position: relative;
-          animation: slideInRight 1s ease-out;
+          animation: elegantEntrance 1.5s ease-out;
         }
 
         .image-container {
           position: relative;
           border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 25px 50px var(--shadow-dark);
-          transform: perspective(1000px) rotateY(-5deg);
-          transition: all 0.3s ease;
+          box-shadow: 0 25px 50px var(--shadow-color);
+          border: 2px solid var(--border-color);
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: perspective(1000px) rotateY(-8deg) rotateX(3deg);
         }
 
         .image-container:hover {
-          transform: perspective(1000px) rotateY(0deg) scale(1.02);
+          transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(-10px);
+          box-shadow: 0 35px 70px var(--shadow-color);
+          border-color: var(--accent-color);
         }
 
         .hero-image img {
           width: 100%;
           height: 400px;
           object-fit: cover;
-          transition: transform 0.3s ease;
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          filter: brightness(1) contrast(1.05);
+        }
+
+        .image-container:hover img {
+          transform: scale(1.05);
+          filter: brightness(1.1) contrast(1.1);
         }
 
         .image-overlay {
@@ -349,13 +351,17 @@ class SchoolHeroSection extends HTMLElement {
           left: 0;
           right: 0;
           bottom: 0;
-          background: var(--overlay-gradient);
+          background: linear-gradient(135deg, 
+            var(--gradient1) 0%, 
+            transparent 30%, 
+            transparent 70%, 
+            var(--gradient2) 100%);
           opacity: 0;
-          transition: opacity 0.3s ease;
+          transition: opacity 0.6s ease;
         }
 
         .image-container:hover .image-overlay {
-          opacity: 1;
+          opacity: 0.2;
         }
 
         .stats-bar {
@@ -363,19 +369,25 @@ class SchoolHeroSection extends HTMLElement {
           bottom: 5%;
           left: 5%;
           right: 5%;
-          background: rgba(30, 41, 91, 0.9);
+          background: rgba(30, 58, 138, 0.95);
           backdrop-filter: blur(20px);
           border-radius: 15px;
           padding: 20px;
           display: ${this.settings.showStats === 'true' ? 'flex' : 'none'};
           justify-content: space-around;
           z-index: 6;
-          border: 1px solid var(--hover-overlay);
+          border: 1px solid var(--border-color);
+          box-shadow: 0 10px 30px var(--shadow-color);
         }
 
         .stat-item {
           text-align: center;
-          color: var(--neutral-white);
+          color: var(--text-color);
+          transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+          transform: translateY(-2px);
         }
 
         .stat-number {
@@ -383,13 +395,15 @@ class SchoolHeroSection extends HTMLElement {
           font-weight: 700;
           display: block;
           margin-bottom: 5px;
-          color: var(--secondary-light);
+          color: var(--accent-color);
+          text-shadow: 1px 1px 2px var(--shadow-color);
         }
 
         .stat-label {
           font-size: 0.9rem;
-          color: var(--neutral-light);
+          color: var(--text-color);
           font-weight: 500;
+          opacity: 0.9;
         }
 
         .scroll-indicator {
@@ -400,30 +414,40 @@ class SchoolHeroSection extends HTMLElement {
           z-index: 10;
           animation: bounce 2s infinite;
           display: ${this.settings.showScrollIndicator === 'true' ? 'block' : 'none'};
+          color: var(--accent-color);
+          font-size: 1.5rem;
+          cursor: pointer;
+          transition: color 0.3s ease;
+        }
+
+        .scroll-indicator:hover {
+          color: var(--text-color);
         }
 
         .scroll-indicator::after {
           content: '↓';
-          color: var(--neutral-light);
-          font-size: 1.5rem;
-          text-shadow: 1px 1px 2px var(--shadow-dark);
+          text-shadow: 1px 1px 2px var(--shadow-color);
+        }
+
+        @keyframes elegantEntrance {
+          0% {
+            opacity: 0;
+            transform: perspective(1000px) rotateY(-15deg) rotateX(8deg) translateX(50px) translateY(30px);
+          }
+          50% {
+            opacity: 0.7;
+            transform: perspective(1000px) rotateY(-10deg) rotateX(5deg) translateX(20px) translateY(10px);
+          }
+          100% {
+            opacity: 1;
+            transform: perspective(1000px) rotateY(-8deg) rotateX(3deg) translateX(0) translateY(0);
+          }
         }
 
         @keyframes slideInLeft {
           from {
             opacity: 0;
             transform: translateX(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(50px);
           }
           to {
             opacity: 1;
@@ -494,6 +518,10 @@ class SchoolHeroSection extends HTMLElement {
             margin: 0 1rem;
           }
 
+          .image-container:hover {
+            transform: translateY(-5px);
+          }
+
           .hero-content {
             padding: 2rem 0;
           }
@@ -546,7 +574,7 @@ class SchoolHeroSection extends HTMLElement {
             </div>
             <div class="hero-image">
               <div class="image-container">
-                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1932&q=80" alt="Students collaborating in modern classroom environment">
+                <img src="${this.settings.heroImage}" alt="${this.settings.imageAltText}">
                 <div class="image-overlay" aria-hidden="true"></div>
               </div>
             </div>
@@ -587,6 +615,8 @@ class SchoolHeroSection extends HTMLElement {
       case 'secondary-button-text':
       case 'primary-button-link':
       case 'secondary-button-link':
+      case 'hero-image':
+      case 'image-alt-text':
       case 'stat1-number':
       case 'stat1-label':
       case 'stat2-number':
