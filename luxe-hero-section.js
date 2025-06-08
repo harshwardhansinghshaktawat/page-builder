@@ -73,33 +73,6 @@ class LuxeHeroSection extends HTMLElement {
     }
   }
 
-  updateCSSVariables() {
-    const hostStyle = this.shadowRoot.querySelector(':host');
-    if (hostStyle) {
-      const style = this.shadowRoot.querySelector('style');
-      if (style) {
-        // Update the CSS with new variables
-        style.textContent = style.textContent.replace(
-          /:host\s*{[^}]*}/,
-          `:host {
-            --bg-color: ${this.settings.backgroundColor};
-            --text-color: ${this.settings.textColor};
-            --primary-btn: ${this.settings.primaryButtonColor};
-            --secondary-btn: ${this.settings.secondaryButtonColor};
-            --accent: ${this.settings.accentColor};
-            --title-font: ${this.settings.titleFontFamily};
-            --subtitle-font: ${this.settings.subtitleFontFamily};
-            --button-font: ${this.settings.buttonFontFamily};
-            display: block;
-            width: 100%;
-            min-height: 100vh;
-            position: relative;
-          }`
-        );
-      }
-    }
-  }
-
   render() {
     this.shadowRoot.innerHTML = `
       <style>
@@ -507,6 +480,151 @@ class LuxeHeroSection extends HTMLElement {
     this.initializeAnimations();
   }
 
+  updateElement(name) {
+    const rootStyle = this.shadowRoot.querySelector('style');
+    if (rootStyle) {
+      rootStyle.textContent = rootStyle.textContent.replace(
+        /:host\s*{[^}]*}/,
+        `:host {
+          --bg-color: ${this.settings.backgroundColor};
+          --text-color: ${this.settings.textColor};
+          --primary-btn: ${this.settings.primaryButtonColor};
+          --secondary-btn: ${this.settings.secondaryButtonColor};
+          --accent: ${this.settings.accentColor};
+          --title-font: ${this.settings.titleFontFamily};
+          --subtitle-font: ${this.settings.subtitleFontFamily};
+          --button-font: ${this.settings.buttonFontFamily};
+          display: block;
+          width: 100%;
+          min-height: 100vh;
+          position: relative;
+        }`
+      );
+    }
+
+    switch (name) {
+      case 'hero-title':
+        this.shadowRoot.querySelector('.hero-title').textContent = this.settings.heroTitle;
+        break;
+      case 'hero-subtitle':
+        this.shadowRoot.querySelector('.hero-subtitle').textContent = this.settings.heroSubtitle;
+        break;
+      case 'hero-badge':
+        this.shadowRoot.querySelector('.hero-badge').textContent = this.settings.heroBadge;
+        break;
+      case 'primary-button-text':
+        this.shadowRoot.querySelector('.cta-primary').textContent = this.settings.primaryButtonText;
+        break;
+      case 'secondary-button-text':
+        this.shadowRoot.querySelector('.cta-secondary').textContent = this.settings.secondaryButtonText;
+        break;
+      case 'primary-button-link':
+        this.shadowRoot.querySelector('.cta-primary').href = this.settings.primaryButtonLink;
+        break;
+      case 'secondary-button-link':
+        this.shadowRoot.querySelector('.cta-secondary').href = this.settings.secondaryButtonLink;
+        break;
+      case 'primary-button-target':
+        this.shadowRoot.querySelector('.cta-primary').target = this.settings.primaryButtonTarget;
+        break;
+      case 'secondary-button-target':
+        this.shadowRoot.querySelector('.cta-secondary').target = this.settings.secondaryButtonTarget;
+        break;
+      case 'stat1-number':
+        this.shadowRoot.querySelector('.stat:nth-child(1) .stat-number').textContent = this.settings.stat1Number;
+        break;
+      case 'stat1-label':
+        this.shadowRoot.querySelector('.stat:nth-child(1) .stat-label').textContent = this.settings.stat1Label;
+        break;
+      case 'stat2-number':
+        this.shadowRoot.querySelector('.stat:nth-child(2) .stat-number').textContent = this.settings.stat2Number;
+        break;
+      case 'stat2-label':
+        this.shadowRoot.querySelector('.stat:nth-child(2) .stat-label').textContent = this.settings.stat2Label;
+        break;
+      case 'stat3-number':
+        this.shadowRoot.querySelector('.stat:nth-child(3) .stat-number').textContent = this.settings.stat3Number;
+        break;
+      case 'stat3-label':
+        this.shadowRoot.querySelector('.stat:nth-child(3) .stat-label').textContent = this.settings.stat3Label;
+        break;
+      case 'product1-title':
+        this.shadowRoot.querySelector('.product-card:nth-child(1) .product-title').textContent = this.settings.product1Title;
+        break;
+      case 'product1-price':
+        this.shadowRoot.querySelector('.product-card:nth-child(1) .product-price').textContent = this.settings.product1Price;
+        break;
+      case 'product1-description':
+        this.shadowRoot.querySelector('.product-card:nth-child(1) .product-description').textContent = this.settings.product1Description;
+        break;
+      case 'product1-image':
+        this.shadowRoot.querySelector('.product-card:nth-child(1) .product-image').src = this.settings.product1Image;
+        break;
+      case 'product1-link':
+        this.shadowRoot.querySelector('.product-card:nth-child(1)').href = this.settings.product1Link;
+        break;
+      case 'product1-target':
+        this.shadowRoot.querySelector('.product-card:nth-child(1)').target = this.settings.product1Target;
+        break;
+      case 'product2-title':
+        this.shadowRoot.querySelector('.product-card:nth-child(2) .product-title').textContent = this.settings.product2Title;
+        break;
+      case 'product2-price':
+        this.shadowRoot.querySelector('.product-card:nth-child(2) .product-price').textContent = this.settings.product2Price;
+        break;
+      case 'product2-description':
+        this.shadowRoot.querySelector('.product-card:nth-child(2) .product-description').textContent = this.settings.product2Description;
+        break;
+      case 'product2-image':
+        this.shadowRoot.querySelector('.product-card:nth-child(2) .product-image').src = this.settings.product2Image;
+        break;
+      case 'product2-link':
+        this.shadowRoot.querySelector('.product-card:nth-child(2)').href = this.settings.product2Link;
+        break;
+      case 'product2-target':
+        this.shadowRoot.querySelector('.product-card:nth-child(2)').target = this.settings.product2Target;
+        break;
+      case 'product3-title':
+        this.shadowRoot.querySelector('.product-card:nth-child(3) .product-title').textContent = this.settings.product3Title;
+        break;
+      case 'product3-price':
+        this.shadowRoot.querySelector('.product-card:nth-child(3) .product-price').textContent = this.settings.product3Price;
+        break;
+      case 'product3-description':
+        this.shadowRoot.querySelector('.product-card:nth-child(3) .product-description').textContent = this.settings.product3Description;
+        break;
+      case 'product3-image':
+        this.shadowRoot.querySelector('.product-card:nth-child(3) .product-image').src = this.settings.product3Image;
+        break;
+      case 'product3-link':
+        this.shadowRoot.querySelector('.product-card:nth-child(3)').href = this.settings.product3Link;
+        break;
+      case 'product3-target':
+        this.shadowRoot.querySelector('.product-card:nth-child(3)').target = this.settings.product3Target;
+        break;
+      case 'title-font-size':
+        this.shadowRoot.querySelector('.hero-title').style.fontSize = this.settings.titleFontSize;
+        break;
+      case 'subtitle-font-size':
+        this.shadowRoot.querySelector('.hero-subtitle').style.fontSize = this.settings.subtitleFontSize;
+        break;
+      case 'button-font-size':
+        const buttons = this.shadowRoot.querySelectorAll('.cta-primary, .cta-secondary');
+        buttons.forEach(btn => btn.style.fontSize = this.settings.buttonFontSize);
+        break;
+      case 'title-font-family':
+        this.shadowRoot.querySelector('.hero-title').style.fontFamily = this.settings.titleFontFamily;
+        break;
+      case 'subtitle-font-family':
+        this.shadowRoot.querySelector('.hero-subtitle').style.fontFamily = this.settings.subtitleFontFamily;
+        break;
+      case 'button-font-family':
+        const btns = this.shadowRoot.querySelectorAll('.cta-primary, .cta-secondary');
+        btns.forEach(btn => btn.style.fontFamily = this.settings.buttonFontFamily);
+        break;
+    }
+  }
+
   initializeAnimations() {
     // Animate stats counter
     setTimeout(() => {
@@ -530,164 +648,6 @@ class LuxeHeroSection extends HTMLElement {
         }
       });
     }, 1000);
-  }
-
-  updateElement(name) {
-    if (!this.shadowRoot) return;
-
-    // For color and font changes, update CSS variables
-    if (['background-color', 'text-color', 'primary-button-color', 'secondary-button-color', 'accent-color', 'title-font-family', 'subtitle-font-family', 'button-font-family'].includes(name)) {
-      this.updateCSSVariables();
-    }
-
-    switch (name) {
-      case 'hero-title':
-        const title = this.shadowRoot.querySelector('.hero-title');
-        if (title) title.textContent = this.settings.heroTitle;
-        break;
-      case 'hero-subtitle':
-        const subtitle = this.shadowRoot.querySelector('.hero-subtitle');
-        if (subtitle) subtitle.textContent = this.settings.heroSubtitle;
-        break;
-      case 'hero-badge':
-        const badge = this.shadowRoot.querySelector('.hero-badge');
-        if (badge) badge.textContent = this.settings.heroBadge;
-        break;
-      case 'primary-button-text':
-        const primaryBtn = this.shadowRoot.querySelector('.cta-primary');
-        if (primaryBtn) primaryBtn.textContent = this.settings.primaryButtonText;
-        break;
-      case 'secondary-button-text':
-        const secondaryBtn = this.shadowRoot.querySelector('.cta-secondary');
-        if (secondaryBtn) secondaryBtn.textContent = this.settings.secondaryButtonText;
-        break;
-      case 'primary-button-link':
-        const primaryLink = this.shadowRoot.querySelector('.cta-primary');
-        if (primaryLink) primaryLink.href = this.settings.primaryButtonLink;
-        break;
-      case 'secondary-button-link':
-        const secondaryLink = this.shadowRoot.querySelector('.cta-secondary');
-        if (secondaryLink) secondaryLink.href = this.settings.secondaryButtonLink;
-        break;
-      case 'primary-button-target':
-        const primaryTarget = this.shadowRoot.querySelector('.cta-primary');
-        if (primaryTarget) primaryTarget.target = this.settings.primaryButtonTarget;
-        break;
-      case 'secondary-button-target':
-        const secondaryTarget = this.shadowRoot.querySelector('.cta-secondary');
-        if (secondaryTarget) secondaryTarget.target = this.settings.secondaryButtonTarget;
-        break;
-      // Handle stats
-      case 'stat1-number':
-        const stat1Num = this.shadowRoot.querySelector('.stat:nth-child(1) .stat-number');
-        if (stat1Num) stat1Num.textContent = this.settings.stat1Number;
-        break;
-      case 'stat1-label':
-        const stat1Lab = this.shadowRoot.querySelector('.stat:nth-child(1) .stat-label');
-        if (stat1Lab) stat1Lab.textContent = this.settings.stat1Label;
-        break;
-      case 'stat2-number':
-        const stat2Num = this.shadowRoot.querySelector('.stat:nth-child(2) .stat-number');
-        if (stat2Num) stat2Num.textContent = this.settings.stat2Number;
-        break;
-      case 'stat2-label':
-        const stat2Lab = this.shadowRoot.querySelector('.stat:nth-child(2) .stat-label');
-        if (stat2Lab) stat2Lab.textContent = this.settings.stat2Label;
-        break;
-      case 'stat3-number':
-        const stat3Num = this.shadowRoot.querySelector('.stat:nth-child(3) .stat-number');
-        if (stat3Num) stat3Num.textContent = this.settings.stat3Number;
-        break;
-      case 'stat3-label':
-        const stat3Lab = this.shadowRoot.querySelector('.stat:nth-child(3) .stat-label');
-        if (stat3Lab) stat3Lab.textContent = this.settings.stat3Label;
-        break;
-      // Handle products
-      case 'product1-title':
-        const prod1Title = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-title');
-        if (prod1Title) prod1Title.textContent = this.settings.product1Title;
-        break;
-      case 'product1-price':
-        const prod1Price = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-price');
-        if (prod1Price) prod1Price.textContent = this.settings.product1Price;
-        break;
-      case 'product1-description':
-        const prod1Desc = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-description');
-        if (prod1Desc) prod1Desc.textContent = this.settings.product1Description;
-        break;
-      case 'product1-image':
-        const prod1Img = this.shadowRoot.querySelector('.product-card:nth-child(1) .product-image');
-        if (prod1Img) prod1Img.src = this.settings.product1Image;
-        break;
-      case 'product1-link':
-        const prod1Link = this.shadowRoot.querySelector('.product-card:nth-child(1)');
-        if (prod1Link) prod1Link.href = this.settings.product1Link;
-        break;
-      case 'product1-target':
-        const prod1Target = this.shadowRoot.querySelector('.product-card:nth-child(1)');
-        if (prod1Target) prod1Target.target = this.settings.product1Target;
-        break;
-      case 'product2-title':
-        const prod2Title = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-title');
-        if (prod2Title) prod2Title.textContent = this.settings.product2Title;
-        break;
-      case 'product2-price':
-        const prod2Price = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-price');
-        if (prod2Price) prod2Price.textContent = this.settings.product2Price;
-        break;
-      case 'product2-description':
-        const prod2Desc = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-description');
-        if (prod2Desc) prod2Desc.textContent = this.settings.product2Description;
-        break;
-      case 'product2-image':
-        const prod2Img = this.shadowRoot.querySelector('.product-card:nth-child(2) .product-image');
-        if (prod2Img) prod2Img.src = this.settings.product2Image;
-        break;
-      case 'product2-link':
-        const prod2Link = this.shadowRoot.querySelector('.product-card:nth-child(2)');
-        if (prod2Link) prod2Link.href = this.settings.product2Link;
-        break;
-      case 'product2-target':
-        const prod2Target = this.shadowRoot.querySelector('.product-card:nth-child(2)');
-        if (prod2Target) prod2Target.target = this.settings.product2Target;
-        break;
-      case 'product3-title':
-        const prod3Title = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-title');
-        if (prod3Title) prod3Title.textContent = this.settings.product3Title;
-        break;
-      case 'product3-price':
-        const prod3Price = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-price');
-        if (prod3Price) prod3Price.textContent = this.settings.product3Price;
-        break;
-      case 'product3-description':
-        const prod3Desc = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-description');
-        if (prod3Desc) prod3Desc.textContent = this.settings.product3Description;
-        break;
-      case 'product3-image':
-        const prod3Img = this.shadowRoot.querySelector('.product-card:nth-child(3) .product-image');
-        if (prod3Img) prod3Img.src = this.settings.product3Image;
-        break;
-      case 'product3-link':
-        const prod3Link = this.shadowRoot.querySelector('.product-card:nth-child(3)');
-        if (prod3Link) prod3Link.href = this.settings.product3Link;
-        break;
-      case 'product3-target':
-        const prod3Target = this.shadowRoot.querySelector('.product-card:nth-child(3)');
-        if (prod3Target) prod3Target.target = this.settings.product3Target;
-        break;
-      case 'title-font-size':
-        const titleEl = this.shadowRoot.querySelector('.hero-title');
-        if (titleEl) titleEl.style.fontSize = this.settings.titleFontSize;
-        break;
-      case 'subtitle-font-size':
-        const subtitleEl = this.shadowRoot.querySelector('.hero-subtitle');
-        if (subtitleEl) subtitleEl.style.fontSize = this.settings.subtitleFontSize;
-        break;
-      case 'button-font-size':
-        const buttons = this.shadowRoot.querySelectorAll('.cta-primary, .cta-secondary');
-        buttons.forEach(btn => btn.style.fontSize = this.settings.buttonFontSize);
-        break;
-    }
   }
 }
 
