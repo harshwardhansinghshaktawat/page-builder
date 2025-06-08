@@ -46,6 +46,19 @@ class HeroSection extends HTMLElement {
   }
 
   render() {
+    // Fixed margin logic for subtitle alignment
+    let subtitleMarginLeft, subtitleMarginRight;
+    if (this.settings.heroAlignment === 'center') {
+      subtitleMarginLeft = 'auto';
+      subtitleMarginRight = 'auto';
+    } else if (this.settings.heroAlignment === 'right') {
+      subtitleMarginLeft = 'auto';
+      subtitleMarginRight = '0';
+    } else { // left alignment
+      subtitleMarginLeft = '0';
+      subtitleMarginRight = 'auto';
+    }
+
     this.shadowRoot.innerHTML = `
       <style>
         :host {
@@ -114,8 +127,8 @@ class HeroSection extends HTMLElement {
           margin-bottom: 2.5rem;
           opacity: 0.9;
           max-width: 600px;
-          margin-left: ${this.settings.heroAlignment === 'center' ? 'auto' : '0'};
-          margin-right: ${this.settings.heroAlignment === 'center' ? 'auto' : '0'};
+          margin-left: ${subtitleMarginLeft};
+          margin-right: ${subtitleMarginRight};
           animation: fadeInUp 1s ease-out 0.3s both;
         }
 
