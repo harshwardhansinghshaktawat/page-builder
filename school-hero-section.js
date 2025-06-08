@@ -1,7 +1,3 @@
-// ============================================================================
-// CUSTOM ELEMENT CODE (school-hero-section.js)
-// ============================================================================
-
 class SchoolHeroSection extends HTMLElement {
   constructor() {
     super();
@@ -67,7 +63,7 @@ class SchoolHeroSection extends HTMLElement {
       'title-font-family', 'subtitle-font-family', 'button-font-family',
       'title-font-size', 'subtitle-font-size', 'button-font-size', 'hero-alignment',
       'hero-image', 'image-alt-text', 'stat1-number', 'stat1-label', 'stat2-number', 'stat2-label',
-      'stat3-number', 'stat3-label', 'stat4-number', 'stat4-label', 'show-stats', 'show-floating-shapes', 'show-scroll-indicator'
+      'stat3-number', 'stat3-label', 'stat4-number', 'stat4-label', 'show-floating-shapes'
     ];
   }
 
@@ -146,7 +142,7 @@ class SchoolHeroSection extends HTMLElement {
           bottom: 0;
           overflow: hidden;
           z-index: 2;
-          display: ${this.settings.showFloatingShapes === 'true' ? 'block' : 'none'};
+          display: ${this.settings.showFloatingShapes === 'show' ? 'block' : 'none'};
         }
 
         .floating-shape {
@@ -373,7 +369,7 @@ class SchoolHeroSection extends HTMLElement {
           backdrop-filter: blur(20px);
           border-radius: 15px;
           padding: 20px;
-          display: ${this.settings.showStats === 'true' ? 'flex' : 'none'};
+          display: flex;
           justify-content: space-around;
           z-index: 6;
           border: 1px solid var(--border-color);
@@ -413,7 +409,7 @@ class SchoolHeroSection extends HTMLElement {
           transform: translateX(-50%);
           z-index: 10;
           animation: bounce 2s infinite;
-          display: ${this.settings.showScrollIndicator === 'true' ? 'block' : 'none'};
+          display: block;
           color: var(--accent-color);
           font-size: 1.5rem;
           cursor: pointer;
@@ -626,9 +622,7 @@ class SchoolHeroSection extends HTMLElement {
       case 'stat4-number':
       case 'stat4-label':
       case 'hero-alignment':
-      case 'show-stats':
       case 'show-floating-shapes':
-      case 'show-scroll-indicator':
         this.render();
         break;
     }
