@@ -3,27 +3,27 @@ class HeroImageSection extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.settings = {
-      heroTitle: 'Discover Your Potential',
-      heroSubtitle: 'Join thousands of professionals who have transformed their careers with our innovative platform.',
-      primaryButtonText: 'Start Your Journey',
-      secondaryButtonText: 'Watch Demo',
+      heroTitle: 'Elevate Your Vision',
+      heroSubtitle: 'Transform ideas into extraordinary experiences with our sophisticated platform designed for modern professionals.',
+      primaryButtonText: 'Get Started',
+      secondaryButtonText: 'Learn More',
       primaryButtonLink: '#start',
       secondaryButtonLink: '#demo',
       primaryButtonTarget: '_self',
       secondaryButtonTarget: '_self',
       imageUrl: 'https://static.wixstatic.com/media/8874a0_4c42e10ba1284f969298058c350dcde4~mv2.png',
       imageAlt: 'Professional person',
-      backgroundColor: '#0a0a23',
-      textColor: '#ffffff',
-      primaryButtonColor: '#ff6b6b',
+      backgroundColor: '#fafafa',
+      textColor: '#1a1a1a',
+      primaryButtonColor: '#2563eb',
       secondaryButtonColor: 'transparent',
-      accentColor: '#4ecdc4',
-      titleFontFamily: 'Montserrat',
-      subtitleFontFamily: 'Open Sans',
-      buttonFontFamily: 'Roboto',
-      titleFontSize: '52px',
-      subtitleFontSize: '20px',
-      buttonFontSize: '18px'
+      accentColor: '#7c3aed',
+      titleFontFamily: 'Playfair Display',
+      subtitleFontFamily: 'Inter',
+      buttonFontFamily: 'Inter',
+      titleFontSize: '64px',
+      subtitleFontSize: '22px',
+      buttonFontSize: '16px'
     };
     this.render();
   }
@@ -62,7 +62,6 @@ class HeroImageSection extends HTMLElement {
           width: 100%;
           min-height: 100vh;
           position: relative;
-          overflow: hidden;
         }
 
         * {
@@ -75,10 +74,6 @@ class HeroImageSection extends HTMLElement {
           width: 100%;
           min-height: 100vh;
           background: var(--bg-color);
-          background-image: 
-            linear-gradient(135deg, var(--bg-color) 0%, rgba(78, 205, 196, 0.1) 100%),
-            radial-gradient(circle at 80% 20%, var(--accent) 0%, transparent 50%),
-            radial-gradient(circle at 20% 80%, var(--primary-btn) 0%, transparent 50%);
           display: grid;
           grid-template-columns: 1fr 1fr;
           align-items: center;
@@ -90,102 +85,102 @@ class HeroImageSection extends HTMLElement {
           padding: 4rem;
           z-index: 10;
           position: relative;
+          max-width: 600px;
+          justify-self: end;
+          margin-right: 2rem;
         }
 
         .hero-title {
-          font-family: var(--title-font), sans-serif;
+          font-family: var(--title-font), serif;
           font-size: ${this.settings.titleFontSize};
-          font-weight: 800;
+          font-weight: 400;
           line-height: 1.1;
-          margin-bottom: 2rem;
-          background: linear-gradient(135deg, var(--text-color), var(--accent));
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          transform: translateX(-50px);
+          margin-bottom: 1.5rem;
+          color: var(--text-color);
+          letter-spacing: -0.02em;
           opacity: 0;
-          animation: slideInLeft 1s ease-out 0.3s forwards;
+          transform: translateY(30px);
+          animation: fadeInUp 0.8s ease-out 0.2s forwards;
         }
 
         .hero-subtitle {
           font-family: var(--subtitle-font), sans-serif;
           font-size: ${this.settings.subtitleFontSize};
           font-weight: 400;
-          line-height: 1.7;
-          margin-bottom: 3rem;
-          opacity: 0.9;
-          transform: translateX(-50px);
+          line-height: 1.6;
+          margin-bottom: 2.5rem;
+          color: var(--text-color);
+          opacity: 0.8;
           opacity: 0;
-          animation: slideInLeft 1s ease-out 0.6s forwards;
+          transform: translateY(30px);
+          animation: fadeInUp 0.8s ease-out 0.4s forwards;
         }
 
         .hero-buttons {
           display: flex;
           gap: 1.5rem;
-          flex-wrap: wrap;
-          transform: translateX(-50px);
+          align-items: center;
           opacity: 0;
-          animation: slideInLeft 1s ease-out 0.9s forwards;
+          transform: translateY(30px);
+          animation: fadeInUp 0.8s ease-out 0.6s forwards;
         }
 
         .btn {
           font-family: var(--button-font), sans-serif;
           font-size: ${this.settings.buttonFontSize};
-          font-weight: 600;
-          padding: 1.2rem 2.5rem;
-          border-radius: 50px;
+          font-weight: 500;
+          padding: 0.875rem 2rem;
           text-decoration: none;
-          transition: all 0.4s ease;
           cursor: pointer;
-          border: 2px solid transparent;
-          display: inline-block;
+          border: none;
+          border-radius: 8px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           position: relative;
-          overflow: hidden;
-          text-transform: uppercase;
-          letter-spacing: 1px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          letter-spacing: 0.025em;
         }
 
         .btn-primary {
           background: var(--primary-btn);
           color: white;
-          box-shadow: 0 8px 30px rgba(255, 107, 107, 0.3);
-        }
-
-        .btn-primary::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: 0;
-          height: 0;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 50%;
-          transform: translate(-50%, -50%);
-          transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-primary:hover::before {
-          width: 300px;
-          height: 300px;
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
         }
 
         .btn-primary:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+          background: var(--accent);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
         }
 
         .btn-secondary {
-          background: var(--secondary-btn);
+          background: transparent;
           color: var(--text-color);
-          border-color: var(--accent);
-          box-shadow: 0 8px 30px rgba(78, 205, 196, 0.2);
+          border: 1.5px solid rgba(26, 26, 26, 0.2);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .btn-secondary::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: var(--text-color);
+          transition: left 0.3s ease;
+          z-index: -1;
+        }
+
+        .btn-secondary:hover::before {
+          left: 0;
         }
 
         .btn-secondary:hover {
-          background: var(--accent);
-          color: white;
-          transform: translateY(-5px);
-          box-shadow: 0 15px 40px rgba(78, 205, 196, 0.4);
+          color: var(--bg-color);
+          border-color: var(--text-color);
         }
 
         .image-section {
@@ -194,141 +189,70 @@ class HeroImageSection extends HTMLElement {
           align-items: center;
           justify-content: center;
           position: relative;
-          overflow: hidden;
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
 
         .hero-image {
-          max-width: 80%;
-          max-height: 90%;
+          width: auto;
+          height: 80vh;
+          max-width: 90%;
           object-fit: contain;
-          transform: translateX(50px) scale(0.8);
+          object-position: center;
           opacity: 0;
-          animation: slideInRight 1.2s ease-out 0.5s forwards;
-          filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+          transform: translateX(30px);
+          animation: fadeInRight 1s ease-out 0.3s forwards;
         }
 
-        .decorative-elements {
+        .decorative-accent {
           position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          pointer-events: none;
+          width: 200px;
+          height: 200px;
+          background: linear-gradient(135deg, var(--primary-btn), var(--accent));
+          border-radius: 50%;
+          opacity: 0.1;
+          top: 15%;
+          left: 10%;
           z-index: 1;
         }
 
-        .floating-orb {
-          position: absolute;
-          border-radius: 50%;
-          background: linear-gradient(45deg, var(--accent), var(--primary-btn));
-          opacity: 0.6;
-          animation: float 4s ease-in-out infinite;
-        }
-
-        .orb-1 {
-          width: 100px;
-          height: 100px;
-          top: 20%;
-          left: 10%;
-          animation-delay: 0s;
-        }
-
-        .orb-2 {
-          width: 60px;
-          height: 60px;
-          top: 70%;
-          right: 20%;
-          animation-delay: 2s;
-        }
-
-        .orb-3 {
-          width: 80px;
-          height: 80px;
-          bottom: 30%;
-          left: 70%;
-          animation-delay: 1s;
-        }
-
-        .geometric-shape {
-          position: absolute;
-          border: 3px solid var(--accent);
-          opacity: 0.3;
-          animation: rotate 8s linear infinite;
-        }
-
-        .triangle {
-          width: 0;
-          height: 0;
-          border-left: 25px solid transparent;
-          border-right: 25px solid transparent;
-          border-bottom: 43px solid var(--accent);
-          top: 15%;
-          right: 15%;
-          opacity: 0.4;
-        }
-
-        .square {
-          width: 40px;
-          height: 40px;
-          background: transparent;
-          border: 2px solid var(--primary-btn);
-          top: 60%;
-          left: 5%;
-          opacity: 0.5;
-          animation: rotate 6s linear infinite reverse;
-        }
-
-        @keyframes slideInLeft {
+        @keyframes fadeInUp {
           to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeInRight {
+          to {
+            opacity: 1;
             transform: translateX(0);
-            opacity: 1;
-          }
-        }
-
-        @keyframes slideInRight {
-          to {
-            transform: translateX(0) scale(1);
-            opacity: 1;
-          }
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px) scale(1);
-          }
-          50% {
-            transform: translateY(-20px) scale(1.1);
-          }
-        }
-
-        @keyframes rotate {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
           }
         }
 
         @media (max-width: 1024px) {
           .hero-container {
             grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr;
+            grid-template-rows: auto auto;
           }
           
           .content-section {
             padding: 3rem 2rem;
             text-align: center;
+            justify-self: center;
+            margin: 0;
+            max-width: none;
+            order: 2;
           }
           
           .image-section {
             height: 60vh;
-            order: -1;
+            order: 1;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
           }
           
           .hero-image {
-            max-width: 60%;
-            max-height: 80%;
+            height: 50vh;
+            max-height: 400px;
           }
         }
 
@@ -343,20 +267,19 @@ class HeroImageSection extends HTMLElement {
           
           .hero-buttons {
             flex-direction: column;
-            align-items: center;
+            gap: 1rem;
           }
           
           .btn {
             width: 100%;
-            max-width: 300px;
-            text-align: center;
+            max-width: 280px;
           }
           
           .content-section {
-            padding: 2rem 1rem;
+            padding: 2rem 1.5rem;
           }
           
-          .floating-orb, .geometric-shape, .triangle, .square {
+          .decorative-accent {
             display: none;
           }
         }
@@ -373,16 +296,21 @@ class HeroImageSection extends HTMLElement {
           .image-section {
             height: 50vh;
           }
+          
+          .hero-image {
+            height: 40vh;
+          }
+          
+          .content-section {
+            padding: 2rem 1rem;
+          }
         }
       </style>
 
       <div class="hero-container">
-        <div class="decorative-elements">
-          <div class="floating-orb orb-1"></div>
-          <div class="floating-orb orb-2"></div>
-          <div class="floating-orb orb-3"></div>
-          <div class="geometric-shape triangle"></div>
-          <div class="geometric-shape square"></div>
+        <div class="image-section">
+          <div class="decorative-accent"></div>
+          <img src="${this.settings.imageUrl}" alt="${this.settings.imageAlt}" class="hero-image" loading="lazy">
         </div>
         
         <div class="content-section">
@@ -396,10 +324,6 @@ class HeroImageSection extends HTMLElement {
               ${this.settings.secondaryButtonText}
             </a>
           </div>
-        </div>
-        
-        <div class="image-section">
-          <img src="${this.settings.imageUrl}" alt="${this.settings.imageAlt}" class="hero-image">
         </div>
       </div>
     `;
@@ -459,7 +383,7 @@ class HeroImageSection extends HTMLElement {
         break;
       case 'title-font-family':
         const titleEl = this.shadowRoot.querySelector('.hero-title');
-        if (titleEl) titleEl.style.fontFamily = `${this.settings.titleFontFamily}, sans-serif`;
+        if (titleEl) titleEl.style.fontFamily = `${this.settings.titleFontFamily}, serif`;
         break;
       case 'subtitle-font-family':
         const subtitleEl = this.shadowRoot.querySelector('.hero-subtitle');
