@@ -67,6 +67,7 @@ class VisualPortfolioHero extends HTMLElement {
     this.animationId = null;
     this.raycaster = null;
     this.clock = null;
+    this.currentActiveIndex = 0;
     
     this.render();
     this.initWebGL();
@@ -438,21 +439,6 @@ class VisualPortfolioHero extends HTMLElement {
           transform: scale(1.2);
         }
 
-        .scroll-indicator {
-          position: absolute;
-          bottom: 2rem;
-          right: 3rem;
-          color: var(--vector-art-color);
-          font-size: 1.5rem;
-          animation: float 3s ease-in-out infinite;
-          cursor: pointer;
-          z-index: 15;
-        }
-
-        .scroll-indicator::after {
-          content: '↓';
-        }
-
         @keyframes slideInFromLeft {
           from {
             opacity: 0;
@@ -571,10 +557,6 @@ class VisualPortfolioHero extends HTMLElement {
             width: 100%;
             max-width: 300px;
             text-align: center;
-          }
-
-          .scroll-indicator {
-            right: 1.5rem;
           }
         }
 
@@ -723,14 +705,9 @@ class VisualPortfolioHero extends HTMLElement {
       this.settings.image6
     ];
 
-    const cardPositions = [
-      { x: -2, y: 2, z: 0, rotation: 0.1 },
-      { x: 1, y: 1.5, z: -1, rotation: -0.1 },
-      { x: -1, y: -1, z: 0.5, rotation: 0.15 },
-      { x: 2.5, y: -0.5, z: -0.5, rotation: -0.05 },
-      { x: 0, y: 0.5, z: -2, rotation: 0.2 },
-      { x: -3, y: -2, z: 1, rotation: -0.15 }
-    ];
+    // Circular arrangement for elegant showcase
+    const radius = 4;
+    const angleStep = (Math.PI * 2) / images.length;
 
     images.forEach((imageUrl, index) => {
       const texture = loader.load(imageUrl, (loadedTexture) => {
@@ -738,50 +715,62 @@ class VisualPortfolioHero extends HTMLElement {
         loadedTexture.magFilter = THREE.LinearFilter;
       });
 
-      const geometry = new THREE.PlaneGeometry(1.5, 2);
+      // Larger, more prominent images
+      const geometry = new THREE.PlaneGeometry(2.5, 3.2);
       const material = new THREE.MeshLambertMaterial({
         map: texture,
         transparent: true,
-        opacity: 0.9
+        opacity: index === 0 ? 1.0 : 0.6
       });
 
       const mesh = new THREE.Mesh(geometry, material);
-      const pos = cardPositions[index];
       
-      mesh.position.set(pos.x, pos.y, pos.z);
-      mesh.rotation.z = pos.rotation;
-      mesh.rotation.y = Math.random() * 0.2 - 0.1;
+      // Circular positioning
+      const angle = angleStep * index;
+      const x = Math.cos(angle) * radius;
+      const z = Math.sin(angle) * radius;
+      
+      mesh.position.set(x, 0, z);
+      mesh.rotation.y = -angle + Math.PI; // Face towards center
+      mesh.rotation.x = 0.05; // Slight tilt for elegance
 
-      // Store initial values for animation
+      // Store values for animation
       mesh.userData = {
         initialPosition: mesh.position.clone(),
         initialRotation: mesh.rotation.clone(),
-        hovered: false,
-        baseScale: 1,
-        targetScale: 1,
-        animationPhase: Math.random() * Math.PI * 2
+        index: index,
+        targetOpacity: index === 0 ? 1.0 : 0.6,
+        currentOpacity: index === 0 ? 1.0 : 0.6,
+        isActive: index === 0,
+        angle: angle,
+        baseScale: index === 0 ? 1.1 : 0.9
       };
 
-      // Add subtle border/frame effect
-      const borderGeometry = new THREE.PlaneGeometry(1.6, 2.1);
-      const borderMaterial = new THREE.MeshBasicMaterial({
-        color: 0x333333,
+      // Add elegant shadow/glow effect
+      const shadowGeometry = new THREE.PlaneGeometry(2.7, 3.4);
+      const gradientColors = this.getGradientColors(this.settings.gradientPreset);
+      const shadowMaterial = new THREE.MeshBasicMaterial({
+        color: new THREE.Color(gradientColors[0]),
         transparent: true,
-        opacity: 0.8
+        opacity: index === 0 ? 0.3 : 0.1
       });
-      const border = new THREE.Mesh(borderGeometry, borderMaterial);
-      border.position.copy(mesh.position);
-      border.position.z -= 0.01;
-      border.rotation.copy(mesh.rotation);
+      const shadow = new THREE.Mesh(shadowGeometry, shadowMaterial);
+      shadow.position.copy(mesh.position);
+      shadow.position.z -= 0.02;
+      shadow.rotation.copy(mesh.rotation);
+      
+      mesh.userData.shadow = shadow;
 
-      this.scene.add(border);
+      this.scene.add(shadow);
       this.scene.add(mesh);
       this.imageCards.push(mesh);
     });
+
+    this.currentActiveIndex = 0;
   }
 
   setupEventListeners() {
-    // Mouse movement for interaction
+    // Mouse movement for subtle camera interaction
     const updateMouse = (event) => {
       const rect = this.shadowRoot.querySelector('.webgl-canvas').getBoundingClientRect();
       this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -795,24 +784,25 @@ class VisualPortfolioHero extends HTMLElement {
       }
     });
 
-    // Click/tap interaction
-    const handleClick = (event) => {
+    // Hover detection for individual images
+    const handleMouseMove = (event) => {
       updateMouse(event);
       this.raycaster.setFromCamera(this.mouse, this.camera);
       const intersects = this.raycaster.intersectObjects(this.imageCards);
       
+      // Reset all cards hover state
+      this.imageCards.forEach(card => {
+        card.userData.hovered = false;
+      });
+      
+      // Set hovered card
       if (intersects.length > 0) {
-        const clickedCard = intersects[0].object;
-        // Animate clicked card
-        clickedCard.userData.targetScale = 1.2;
-        setTimeout(() => {
-          clickedCard.userData.targetScale = 1;
-        }, 300);
+        const hoveredCard = intersects[0].object;
+        hoveredCard.userData.hovered = true;
       }
     };
 
-    window.addEventListener('click', handleClick);
-    window.addEventListener('touchstart', handleClick);
+    window.addEventListener('mousemove', handleMouseMove);
 
     // Resize handler
     window.addEventListener('resize', () => {
@@ -824,7 +814,7 @@ class VisualPortfolioHero extends HTMLElement {
       }
     });
 
-    // UI indicator interaction
+    // UI indicator interaction with elegant transitions
     const indicators = this.shadowRoot.querySelectorAll('.ui-indicator');
     indicators.forEach((indicator, index) => {
       indicator.addEventListener('click', () => {
@@ -833,39 +823,83 @@ class VisualPortfolioHero extends HTMLElement {
         // Add active class to clicked indicator
         indicator.classList.add('active');
         
-        // Focus camera on specific image card
-        if (this.imageCards[index]) {
-          const targetCard = this.imageCards[index];
-          this.focusOnCard(targetCard);
-        }
+        // Smooth transition to selected image
+        this.transitionToImage(index);
       });
     });
   }
 
-  focusOnCard(card) {
-    // Smooth camera movement to focus on selected card
-    const targetPosition = card.position.clone();
-    targetPosition.z += 3;
+  transitionToImage(targetIndex) {
+    if (targetIndex === this.currentActiveIndex) return;
     
-    // Animate camera position
-    const startPos = this.camera.position.clone();
-    const duration = 1000; // 1 second
+    const duration = 1200; // 1.2 seconds for elegant transition
     const startTime = Date.now();
     
-    const animateCamera = () => {
+    // Calculate rotation needed to bring target image to front
+    const currentAngle = this.imageCards[this.currentActiveIndex].userData.angle;
+    const targetAngle = this.imageCards[targetIndex].userData.angle;
+    let rotationDiff = targetAngle - currentAngle;
+    
+    // Choose shortest rotation path
+    if (rotationDiff > Math.PI) rotationDiff -= Math.PI * 2;
+    if (rotationDiff < -Math.PI) rotationDiff += Math.PI * 2;
+    
+    const startRotation = 0;
+    const targetRotation = -rotationDiff;
+    
+    // Store initial states
+    this.imageCards.forEach((card, index) => {
+      card.userData.startOpacity = card.userData.currentOpacity;
+      card.userData.startScale = card.userData.baseScale;
+      card.userData.targetOpacityNew = index === targetIndex ? 1.0 : 0.6;
+      card.userData.targetScaleNew = index === targetIndex ? 1.1 : 0.9;
+      card.userData.isActive = index === targetIndex;
+    });
+    
+    const animateTransition = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // Ease out cubic
       
-      this.camera.position.lerpVectors(startPos, targetPosition, eased);
-      this.camera.lookAt(card.position);
+      // Elegant easing function (ease-in-out-cubic)
+      const eased = progress < 0.5 
+        ? 4 * progress * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      
+      // Rotate the entire gallery
+      const currentRotation = startRotation + (targetRotation - startRotation) * eased;
+      this.imageCards.forEach((card) => {
+        const baseAngle = card.userData.angle;
+        const newAngle = baseAngle + currentRotation;
+        const radius = 4;
+        
+        card.position.x = Math.cos(newAngle) * radius;
+        card.position.z = Math.sin(newAngle) * radius;
+        card.rotation.y = -newAngle + Math.PI;
+        
+        // Smooth opacity transition
+        card.userData.currentOpacity = card.userData.startOpacity + 
+          (card.userData.targetOpacityNew - card.userData.startOpacity) * eased;
+        card.material.opacity = card.userData.currentOpacity;
+        
+        // Smooth scale transition
+        card.userData.baseScale = card.userData.startScale + 
+          (card.userData.targetScaleNew - card.userData.startScale) * eased;
+        card.scale.setScalar(card.userData.baseScale);
+        
+        // Update shadow opacity
+        if (card.userData.shadow) {
+          card.userData.shadow.material.opacity = card.userData.currentOpacity * 0.3;
+        }
+      });
       
       if (progress < 1) {
-        requestAnimationFrame(animateCamera);
+        requestAnimationFrame(animateTransition);
+      } else {
+        this.currentActiveIndex = targetIndex;
       }
     };
     
-    animateCamera();
+    animateTransition();
   }
 
   animate() {
@@ -873,48 +907,51 @@ class VisualPortfolioHero extends HTMLElement {
 
     const time = this.clock.getElapsedTime();
 
-    // Animate image cards
+    // Animate image cards with elegant floating motion
     this.imageCards.forEach((card, index) => {
       if (card.userData) {
-        // Floating animation
-        const phase = card.userData.animationPhase;
-        card.position.y = card.userData.initialPosition.y + Math.sin(time + phase) * 0.1;
-        card.position.x = card.userData.initialPosition.x + Math.cos(time * 0.5 + phase) * 0.05;
+        // Subtle floating animation
+        const floatOffset = Math.sin(time * 0.8 + index * 0.5) * 0.02;
+        card.position.y = floatOffset;
         
-        // Subtle rotation animation
-        card.rotation.z = card.userData.initialRotation.z + Math.sin(time + phase) * 0.02;
-        card.rotation.y = card.userData.initialRotation.y + Math.cos(time * 0.7 + phase) * 0.01;
+        // Gentle breathing scale for active image
+        if (card.userData.isActive) {
+          const breathe = 1 + Math.sin(time * 1.2) * 0.01;
+          card.scale.setScalar(card.userData.baseScale * breathe);
+        }
         
-        // Scale animation for interaction
-        card.userData.baseScale += (card.userData.targetScale - card.userData.baseScale) * 0.1;
-        card.scale.setScalar(card.userData.baseScale);
+        // Hover effect - elegant glow and slight scale
+        if (card.userData.hovered && !card.userData.isActive) {
+          card.userData.targetOpacity = Math.min(card.userData.currentOpacity + 0.02, 0.85);
+          const hoverScale = 1.03;
+          card.scale.setScalar(card.userData.baseScale * hoverScale);
+          
+          // Enhanced shadow glow on hover
+          if (card.userData.shadow) {
+            card.userData.shadow.material.opacity = Math.min(card.userData.shadow.material.opacity + 0.01, 0.4);
+          }
+        } else if (!card.userData.isActive) {
+          card.userData.targetOpacity = Math.max(card.userData.currentOpacity - 0.01, 0.6);
+          card.scale.setScalar(card.userData.baseScale);
+          
+          // Reset shadow glow
+          if (card.userData.shadow) {
+            card.userData.shadow.material.opacity = Math.max(card.userData.shadow.material.opacity - 0.005, 0.1);
+          }
+        }
+        
+        // Smooth opacity transitions
+        card.userData.currentOpacity += (card.userData.targetOpacity - card.userData.currentOpacity) * 0.1;
+        card.material.opacity = card.userData.currentOpacity;
       }
     });
 
-    // Mouse interaction with image cards
-    if (this.raycaster) {
-      this.raycaster.setFromCamera(this.mouse, this.camera);
-      const intersects = this.raycaster.intersectObjects(this.imageCards);
-      
-      // Reset all cards
-      this.imageCards.forEach(card => {
-        card.userData.hovered = false;
-        if (card.userData.targetScale === 1) {
-          card.userData.targetScale = 0.95;
-        }
-      });
-      
-      // Highlight hovered card
-      if (intersects.length > 0) {
-        const hoveredCard = intersects[0].object;
-        hoveredCard.userData.hovered = true;
-        hoveredCard.userData.targetScale = 1.1;
-      }
-    }
-
-    // Subtle camera movement based on mouse
-    this.camera.position.x += (this.mouse.x * 0.5 - this.camera.position.x + 2) * 0.02;
-    this.camera.position.y += (-this.mouse.y * 0.3 - this.camera.position.y) * 0.02;
+    // Subtle camera movement based on mouse (much more gentle)
+    const targetX = this.mouse.x * 0.3 + 2;
+    const targetY = -this.mouse.y * 0.2;
+    
+    this.camera.position.x += (targetX - this.camera.position.x) * 0.01;
+    this.camera.position.y += (targetY - this.camera.position.y) * 0.01;
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     this.renderer.render(this.scene, this.camera);
