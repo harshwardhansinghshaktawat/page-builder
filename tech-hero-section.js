@@ -21,6 +21,12 @@ class TechHeroSection extends HTMLElement {
       primaryAccent: '#3b82f6',
       secondaryAccent: '#8b5cf6',
       
+      // Text Colors
+      titleTextColor: '#ffffff',
+      subtitleTextColor: '#94a3b8',
+      primaryButtonTextColor: '#ffffff',
+      secondaryButtonTextColor: '#ffffff',
+      
       // Gradient Preset
       gradientPreset: 'cyan-blue',
       
@@ -44,12 +50,7 @@ class TechHeroSection extends HTMLElement {
       feature2Icon: '📈',
       feature3Title: 'Secure',
       feature3Subtitle: 'Enterprise grade',
-      feature3Icon: '🔒',
-      
-      // Interactive Elements
-      showParticles: true,
-      showFloatingCards: true,
-      showGlowEffect: true
+      feature3Icon: '🔒'
     };
     this.render();
     this.initializeParticles();
@@ -60,12 +61,12 @@ class TechHeroSection extends HTMLElement {
       'hero-title', 'hero-subtitle', 'primary-button-text', 'secondary-button-text',
       'primary-button-link', 'secondary-button-link', 'primary-button-target', 'secondary-button-target',
       'primary-background', 'secondary-background', 'border-color', 'vector-art-color', 'primary-accent', 'secondary-accent',
+      'title-text-color', 'subtitle-text-color', 'primary-button-text-color', 'secondary-button-text-color',
       'gradient-preset', 'title-font-family', 'subtitle-font-family', 'button-font-family',
       'title-font-size', 'subtitle-font-size', 'button-font-size', 'hero-alignment',
       'feature1-title', 'feature1-subtitle', 'feature1-icon',
       'feature2-title', 'feature2-subtitle', 'feature2-icon',
-      'feature3-title', 'feature3-subtitle', 'feature3-icon',
-      'show-particles', 'show-floating-cards', 'show-glow-effect'
+      'feature3-title', 'feature3-subtitle', 'feature3-icon'
     ];
   }
 
@@ -205,6 +206,10 @@ class TechHeroSection extends HTMLElement {
           --vector-art-color: ${this.settings.vectorArtColor};
           --primary-accent: ${this.settings.primaryAccent};
           --secondary-accent: ${this.settings.secondaryAccent};
+          --title-text-color: ${this.settings.titleTextColor};
+          --subtitle-text-color: ${this.settings.subtitleTextColor};
+          --primary-button-text-color: ${this.settings.primaryButtonTextColor};
+          --secondary-button-text-color: ${this.settings.secondaryButtonTextColor};
           --gradient1: ${gradient1};
           --gradient2: ${gradient2};
           
@@ -274,43 +279,52 @@ class TechHeroSection extends HTMLElement {
           width: 100%;
           height: 100%;
           pointer-events: none;
-          display: ${this.settings.showParticles ? 'block' : 'none'};
+          z-index: 1;
         }
 
         .particle {
           position: absolute;
-          width: 4px;
-          height: 4px;
+          width: 6px;
+          height: 6px;
           background: var(--vector-art-color);
           border-radius: 50%;
-          animation: particleFloat 8s ease-in-out infinite;
+          opacity: 0.8;
+          box-shadow: 0 0 10px var(--vector-art-color);
         }
 
-        .particle:nth-child(2n) { 
+        .particle:nth-child(even) { 
           background: var(--primary-accent); 
-          animation-delay: 2s; 
+          box-shadow: 0 0 10px var(--primary-accent);
         }
         
         .particle:nth-child(3n) { 
           background: var(--secondary-accent); 
-          animation-delay: 4s; 
+          box-shadow: 0 0 10px var(--secondary-accent);
         }
 
-        @keyframes particleFloat {
-          0% { 
-            transform: translateY(100vh) translateX(0px); 
-            opacity: 0; 
-          }
-          10% { 
-            opacity: 1; 
-          }
-          90% { 
-            opacity: 1; 
-          }
-          100% { 
-            transform: translateY(-100px) translateX(50px); 
-            opacity: 0; 
-          }
+        .particle1 { animation: float1 8s ease-in-out infinite; }
+        .particle2 { animation: float2 9s ease-in-out infinite; }
+        .particle3 { animation: float3 7s ease-in-out infinite; }
+
+        @keyframes float1 {
+          0% { transform: translateY(110vh) translateX(0px); opacity: 0; }
+          10% { opacity: 0.8; }
+          90% { opacity: 0.8; }
+          100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
+        }
+
+        @keyframes float2 {
+          0% { transform: translateY(110vh) translateX(0px); opacity: 0; }
+          15% { opacity: 0.6; }
+          85% { opacity: 0.6; }
+          100% { transform: translateY(-10vh) translateX(-20px); opacity: 0; }
+        }
+
+        @keyframes float3 {
+          0% { transform: translateY(110vh) translateX(0px); opacity: 0; }
+          20% { opacity: 0.7; }
+          80% { opacity: 0.7; }
+          100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
         }
 
         .main-content {
@@ -330,7 +344,7 @@ class TechHeroSection extends HTMLElement {
           font-family: '${this.settings.titleFontFamily}', sans-serif;
           font-size: ${this.settings.titleFontSize}px;
           font-weight: 800;
-          color: #ffffff;
+          color: var(--title-text-color);
           line-height: 1.1;
           margin-bottom: 1.5rem;
           background: var(--gradient1);
@@ -350,13 +364,12 @@ class TechHeroSection extends HTMLElement {
           height: 4px;
           background: var(--gradient2);
           border-radius: 2px;
-          display: ${this.settings.showGlowEffect ? 'block' : 'none'};
         }
 
         .hero-subtitle {
           font-family: '${this.settings.subtitleFontFamily}', sans-serif;
           font-size: ${this.settings.subtitleFontSize}px;
-          color: #94a3b8;
+          color: var(--subtitle-text-color);
           line-height: 1.6;
           margin-bottom: 3rem;
           max-width: 600px;
@@ -403,7 +416,7 @@ class TechHeroSection extends HTMLElement {
 
         .btn-primary {
           background: var(--primary-accent);
-          color: #ffffff;
+          color: var(--primary-button-text-color);
           border: 2px solid var(--primary-accent);
           box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
@@ -417,7 +430,7 @@ class TechHeroSection extends HTMLElement {
 
         .btn-secondary {
           background: transparent;
-          color: #ffffff;
+          color: var(--secondary-button-text-color);
           border: 2px solid var(--border-color);
           box-shadow: 0 0 20px rgba(51, 65, 85, 0.2);
         }
@@ -434,7 +447,6 @@ class TechHeroSection extends HTMLElement {
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
           gap: 2rem;
           margin-top: 4rem;
-          display: ${this.settings.showFloatingCards ? 'grid' : 'none'};
         }
 
         .feature-card {
@@ -498,13 +510,13 @@ class TechHeroSection extends HTMLElement {
           font-family: '${this.settings.titleFontFamily}', sans-serif;
           font-size: 1.25rem;
           font-weight: 600;
-          color: #ffffff;
+          color: var(--title-text-color);
           margin-bottom: 0.5rem;
         }
 
         .feature-subtitle {
           font-family: '${this.settings.subtitleFontFamily}', sans-serif;
-          color: #94a3b8;
+          color: var(--subtitle-text-color);
           font-size: 0.9rem;
         }
 
@@ -518,7 +530,6 @@ class TechHeroSection extends HTMLElement {
           background: radial-gradient(circle, var(--vector-art-color) 0%, transparent 70%);
           opacity: 0.1;
           animation: glowPulse 4s ease-in-out infinite;
-          display: ${this.settings.showGlowEffect ? 'block' : 'none'};
           pointer-events: none;
         }
 
@@ -657,8 +668,6 @@ class TechHeroSection extends HTMLElement {
   }
 
   initializeParticles() {
-    if (!this.settings.showParticles) return;
-    
     setTimeout(() => {
       const container = this.shadowRoot.querySelector('.particles-container');
       if (!container) return;
@@ -666,21 +675,16 @@ class TechHeroSection extends HTMLElement {
       // Clear existing particles
       container.innerHTML = '';
 
-      for (let i = 0; i < 20; i++) {
+      // Create 30 particles for better visibility
+      for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
-        particle.className = 'particle';
+        particle.className = `particle particle${(i % 3) + 1}`;
         
         // Random horizontal position
         particle.style.left = Math.random() * 100 + '%';
         
-        // Start from bottom of screen
-        particle.style.bottom = '-10px';
-        
         // Random animation delay
-        particle.style.animationDelay = Math.random() * 8 + 's';
-        
-        // Random animation duration
-        particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        particle.style.animationDelay = Math.random() * 10 + 's';
         
         container.appendChild(particle);
       }
@@ -695,13 +699,11 @@ class TechHeroSection extends HTMLElement {
          'feature1-title', 'feature1-subtitle', 'feature1-icon',
          'feature2-title', 'feature2-subtitle', 'feature2-icon',
          'feature3-title', 'feature3-subtitle', 'feature3-icon',
-         'hero-alignment', 'show-particles', 'show-floating-cards', 'show-glow-effect',
-         'gradient-preset', 'primary-background', 'secondary-background', 'border-color',
-         'vector-art-color', 'primary-accent', 'secondary-accent'].includes(name)) {
+         'hero-alignment', 'gradient-preset', 'primary-background', 'secondary-background', 
+         'border-color', 'vector-art-color', 'primary-accent', 'secondary-accent',
+         'title-text-color', 'subtitle-text-color', 'primary-button-text-color', 'secondary-button-text-color'].includes(name)) {
       this.render();
-      if (name === 'show-particles') {
-        this.initializeParticles();
-      }
+      this.initializeParticles();
     }
   }
 }
