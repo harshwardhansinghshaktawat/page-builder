@@ -13,41 +13,16 @@ class TechHeroSection extends HTMLElement {
       primaryButtonTarget: '_self',
       secondaryButtonTarget: '_self',
       
-      // Background & Base Colors
-      backgroundColor: '#0a0a0f',
-      surfaceColor: '#1a1a2e',
-      overlayColor: '#16213e',
+      // Simplified Color System (6 colors only)
+      primaryBackground: '#0a0a0f',
+      secondaryBackground: '#1a1a2e',
+      borderColor: '#334155',
+      vectorArtColor: '#06b6d4',
+      primaryAccent: '#3b82f6',
+      secondaryAccent: '#8b5cf6',
       
-      // Text Colors
-      titleColor: '#ffffff',
-      subtitleColor: '#94a3b8',
-      accentTextColor: '#06b6d4',
-      
-      // Gradient Colors
-      gradient1Color1: '#06b6d4',
-      gradient1Color2: '#3b82f6',
-      gradient2Color1: '#8b5cf6',
-      gradient2Color2: '#ec4899',
-      gradient3Color1: '#f59e0b',
-      gradient3Color2: '#ef4444',
-      
-      // Button Colors
-      primaryButtonBg: '#06b6d4',
-      primaryButtonHover: '#0891b2',
-      primaryButtonText: '#ffffff',
-      secondaryButtonBorder: '#3b82f6',
-      secondaryButtonText: '#ffffff',
-      secondaryButtonHover: '#3b82f6',
-      
-      // Card Colors
-      cardBackground: '#1e293b',
-      cardBorder: '#334155',
-      cardGlow: '#06b6d4',
-      
-      // Particle Colors
-      particleColor1: '#06b6d4',
-      particleColor2: '#8b5cf6',
-      particleColor3: '#f59e0b',
+      // Gradient Preset
+      gradientPreset: 'cyan-blue',
       
       // Typography
       titleFontFamily: 'Inter',
@@ -60,13 +35,16 @@ class TechHeroSection extends HTMLElement {
       // Layout
       heroAlignment: 'center',
       
-      // Features
+      // Features with custom icons
       feature1Title: 'AI-Powered',
       feature1Subtitle: 'Smart automation',
+      feature1Icon: '🤖',
       feature2Title: 'Scalable',
       feature2Subtitle: 'Growth ready',
+      feature2Icon: '📈',
       feature3Title: 'Secure',
       feature3Subtitle: 'Enterprise grade',
+      feature3Icon: '🔒',
       
       // Interactive Elements
       showParticles: true,
@@ -81,16 +59,12 @@ class TechHeroSection extends HTMLElement {
     return [
       'hero-title', 'hero-subtitle', 'primary-button-text', 'secondary-button-text',
       'primary-button-link', 'secondary-button-link', 'primary-button-target', 'secondary-button-target',
-      'background-color', 'surface-color', 'overlay-color',
-      'title-color', 'subtitle-color', 'accent-text-color',
-      'gradient1-color1', 'gradient1-color2', 'gradient2-color1', 'gradient2-color2', 'gradient3-color1', 'gradient3-color2',
-      'primary-button-bg', 'primary-button-hover', 'primary-button-text',
-      'secondary-button-border', 'secondary-button-text', 'secondary-button-hover',
-      'card-background', 'card-border', 'card-glow',
-      'particle-color1', 'particle-color2', 'particle-color3',
-      'title-font-family', 'subtitle-font-family', 'button-font-family',
+      'primary-background', 'secondary-background', 'border-color', 'vector-art-color', 'primary-accent', 'secondary-accent',
+      'gradient-preset', 'title-font-family', 'subtitle-font-family', 'button-font-family',
       'title-font-size', 'subtitle-font-size', 'button-font-size', 'hero-alignment',
-      'feature1-title', 'feature1-subtitle', 'feature2-title', 'feature2-subtitle', 'feature3-title', 'feature3-subtitle',
+      'feature1-title', 'feature1-subtitle', 'feature1-icon',
+      'feature2-title', 'feature2-subtitle', 'feature2-icon',
+      'feature3-title', 'feature3-subtitle', 'feature3-icon',
       'show-particles', 'show-floating-cards', 'show-glow-effect'
     ];
   }
@@ -101,6 +75,101 @@ class TechHeroSection extends HTMLElement {
       this.settings[key] = newValue || this.settings[key];
       this.updateElement(name);
     }
+  }
+
+  getGradientColors(preset) {
+    const gradients = {
+      'cyan-blue': ['#06b6d4', '#3b82f6'],
+      'purple-pink': ['#8b5cf6', '#ec4899'],
+      'orange-red': ['#f59e0b', '#ef4444'],
+      'green-teal': ['#10b981', '#14b8a6'],
+      'blue-indigo': ['#3b82f6', '#6366f1'],
+      'pink-rose': ['#ec4899', '#f43f5e'],
+      'yellow-orange': ['#eab308', '#f97316'],
+      'teal-cyan': ['#14b8a6', '#06b6d4'],
+      'indigo-purple': ['#6366f1', '#8b5cf6'],
+      'rose-pink': ['#f43f5e', '#ec4899'],
+      'lime-green': ['#84cc16', '#22c55e'],
+      'amber-yellow': ['#f59e0b', '#eab308'],
+      'sky-blue': ['#0ea5e9', '#3b82f6'],
+      'violet-purple': ['#8b5cf6', '#7c3aed'],
+      'emerald-green': ['#10b981', '#059669'],
+      'red-orange': ['#ef4444', '#f97316'],
+      'slate-gray': ['#64748b', '#475569'],
+      'zinc-gray': ['#71717a', '#52525b'],
+      'stone-brown': ['#78716c', '#57534e'],
+      'neutral-gray': ['#737373', '#525252'],
+      'warm-gray': ['#8b7355', '#6b5b47'],
+      'cool-gray': ['#6b7280', '#4b5563'],
+      'blue-gray': ['#64748b', '#475569'],
+      'dark-blue': ['#1e40af', '#1e3a8a'],
+      'dark-purple': ['#7c2d12', '#581c87'],
+      'dark-green': ['#14532d', '#166534'],
+      'dark-red': ['#7f1d1d', '#991b1b'],
+      'light-blue': ['#bfdbfe', '#93c5fd'],
+      'light-purple': ['#e9d5ff', '#c4b5fd'],
+      'light-green': ['#bbf7d0', '#86efac'],
+      'light-red': ['#fecaca', '#fca5a5'],
+      'neon-cyan': ['#00ffff', '#00bfff'],
+      'neon-pink': ['#ff1493', '#ff69b4'],
+      'neon-green': ['#00ff00', '#32cd32'],
+      'neon-purple': ['#9400d3', '#8a2be2'],
+      'sunset': ['#ff7e5f', '#feb47b'],
+      'ocean': ['#667eea', '#764ba2'],
+      'forest': ['#11998e', '#38ef7d'],
+      'galaxy': ['#667db6', '#0082c8'],
+      'aurora': ['#a8edea', '#fed6e3'],
+      'fire': ['#ff512f', '#dd2476'],
+      'ice': ['#74b9ff', '#0984e3'],
+      'gold': ['#f7971e', '#ffd200'],
+      'silver': ['#bdc3c7', '#2c3e50'],
+      'bronze': ['#cd7f32', '#8b4513'],
+      'rainbow': ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'],
+      'midnight': ['#0f0f23', '#1a1a2e'],
+      'dawn': ['#ff9a9e', '#fecfef'],
+      'dusk': ['#4568dc', '#b06ab3'],
+      'spring': ['#a8e6cf', '#88d8a3'],
+      'summer': ['#ffd89b', '#19547b'],
+      'autumn': ['#d66d75', '#e29587'],
+      'winter': ['#eef2f3', '#8e9eab'],
+      'cosmic': ['#667eea', '#764ba2'],
+      'nebula': ['#ff9a9e', '#fecfef'],
+      'solar': ['#f093fb', '#f5576c'],
+      'lunar': ['#4facfe', '#00f2fe'],
+      'stellar': ['#43e97b', '#38f9d7'],
+      'galactic': ['#fa709a', '#fee140'],
+      'quantum': ['#a8edea', '#fed6e3'],
+      'matrix': ['#00ff41', '#008f11'],
+      'cyber': ['#00d4ff', '#090979'],
+      'digital': ['#667eea', '#764ba2'],
+      'virtual': ['#f093fb', '#f5576c'],
+      'hologram': ['#4facfe', '#00f2fe'],
+      'neon': ['#08fdd8', '#09fbd3'],
+      'plasma': ['#f093fb', '#f5576c'],
+      'laser': ['#ff0844', '#ffb199'],
+      'electric': ['#667eea', '#764ba2'],
+      'magnetic': ['#f093fb', '#f5576c'],
+      'atomic': ['#4facfe', '#00f2fe'],
+      'molecular': ['#43e97b', '#38f9d7'],
+      'quantum-blue': ['#667eea', '#764ba2'],
+      'quantum-purple': ['#f093fb', '#f5576c'],
+      'quantum-green': ['#43e97b', '#38f9d7'],
+      'quantum-orange': ['#fa709a', '#fee140'],
+      'deep-sea': ['#2b5876', '#4e4376'],
+      'mountain': ['#870000', '#190a05'],
+      'desert': ['#f7931e', '#c471f5'],
+      'tundra': ['#a8e6cf', '#88d8a3'],
+      'tropical': ['#ff9a9e', '#fecfef'],
+      'arctic': ['#eef2f3', '#8e9eab'],
+      'volcanic': ['#ff512f', '#dd2476'],
+      'crystal': ['#667eea', '#764ba2'],
+      'diamond': ['#f093fb', '#f5576c'],
+      'emerald': ['#11998e', '#38ef7d'],
+      'ruby': ['#ff0844', '#ffb199'],
+      'sapphire': ['#667eea', '#764ba2'],
+      'amethyst': ['#f093fb', '#f5576c']
+    };
+    return gradients[preset] || gradients['cyan-blue'];
   }
 
   render() {
@@ -121,32 +190,23 @@ class TechHeroSection extends HTMLElement {
       alignItems = 'flex-start';
     }
 
+    const gradientColors = this.getGradientColors(this.settings.gradientPreset);
+    const gradient1 = `linear-gradient(135deg, ${gradientColors[0]}, ${gradientColors[1] || gradientColors[0]})`;
+    const gradient2 = `linear-gradient(135deg, ${this.settings.primaryAccent}, ${this.settings.secondaryAccent})`;
+
     this.shadowRoot.innerHTML = `
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap');
         
         :host {
-          --background-color: ${this.settings.backgroundColor};
-          --surface-color: ${this.settings.surfaceColor};
-          --overlay-color: ${this.settings.overlayColor};
-          --title-color: ${this.settings.titleColor};
-          --subtitle-color: ${this.settings.subtitleColor};
-          --accent-text-color: ${this.settings.accentTextColor};
-          --gradient1: linear-gradient(135deg, ${this.settings.gradient1Color1}, ${this.settings.gradient1Color2});
-          --gradient2: linear-gradient(135deg, ${this.settings.gradient2Color1}, ${this.settings.gradient2Color2});
-          --gradient3: linear-gradient(135deg, ${this.settings.gradient3Color1}, ${this.settings.gradient3Color2});
-          --primary-button-bg: ${this.settings.primaryButtonBg};
-          --primary-button-hover: ${this.settings.primaryButtonHover};
-          --primary-button-text: ${this.settings.primaryButtonText};
-          --secondary-button-border: ${this.settings.secondaryButtonBorder};
-          --secondary-button-text: ${this.settings.secondaryButtonText};
-          --secondary-button-hover: ${this.settings.secondaryButtonHover};
-          --card-background: ${this.settings.cardBackground};
-          --card-border: ${this.settings.cardBorder};
-          --card-glow: ${this.settings.cardGlow};
-          --particle-color1: ${this.settings.particleColor1};
-          --particle-color2: ${this.settings.particleColor2};
-          --particle-color3: ${this.settings.particleColor3};
+          --primary-background: ${this.settings.primaryBackground};
+          --secondary-background: ${this.settings.secondaryBackground};
+          --border-color: ${this.settings.borderColor};
+          --vector-art-color: ${this.settings.vectorArtColor};
+          --primary-accent: ${this.settings.primaryAccent};
+          --secondary-accent: ${this.settings.secondaryAccent};
+          --gradient1: ${gradient1};
+          --gradient2: ${gradient2};
           
           display: block;
           width: 100%;
@@ -163,7 +223,7 @@ class TechHeroSection extends HTMLElement {
 
         .hero-container {
           min-height: 100vh;
-          background: var(--background-color);
+          background: var(--primary-background);
           position: relative;
           display: flex;
           align-items: center;
@@ -178,9 +238,9 @@ class TechHeroSection extends HTMLElement {
           width: 100%;
           height: 100%;
           background: 
-            radial-gradient(circle at 20% 20%, var(--gradient1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, var(--gradient2) 0%, transparent 50%),
-            radial-gradient(circle at 40% 60%, var(--gradient3) 0%, transparent 50%);
+            radial-gradient(circle at 20% 20%, var(--primary-accent) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, var(--secondary-accent) 0%, transparent 50%),
+            radial-gradient(circle at 40% 60%, var(--vector-art-color) 0%, transparent 50%);
           opacity: 0.1;
           animation: patternMove 20s ease-in-out infinite;
         }
@@ -221,19 +281,36 @@ class TechHeroSection extends HTMLElement {
           position: absolute;
           width: 4px;
           height: 4px;
-          background: var(--particle-color1);
+          background: var(--vector-art-color);
           border-radius: 50%;
           animation: particleFloat 8s ease-in-out infinite;
         }
 
-        .particle:nth-child(2n) { background: var(--particle-color2); animation-delay: 2s; }
-        .particle:nth-child(3n) { background: var(--particle-color3); animation-delay: 4s; }
+        .particle:nth-child(2n) { 
+          background: var(--primary-accent); 
+          animation-delay: 2s; 
+        }
+        
+        .particle:nth-child(3n) { 
+          background: var(--secondary-accent); 
+          animation-delay: 4s; 
+        }
 
         @keyframes particleFloat {
-          0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          50% { transform: translateY(-100px) translateX(20px); }
+          0% { 
+            transform: translateY(100vh) translateX(0px); 
+            opacity: 0; 
+          }
+          10% { 
+            opacity: 1; 
+          }
+          90% { 
+            opacity: 1; 
+          }
+          100% { 
+            transform: translateY(-100px) translateX(50px); 
+            opacity: 0; 
+          }
         }
 
         .main-content {
@@ -253,7 +330,7 @@ class TechHeroSection extends HTMLElement {
           font-family: '${this.settings.titleFontFamily}', sans-serif;
           font-size: ${this.settings.titleFontSize}px;
           font-weight: 800;
-          color: var(--title-color);
+          color: #ffffff;
           line-height: 1.1;
           margin-bottom: 1.5rem;
           background: var(--gradient1);
@@ -279,7 +356,7 @@ class TechHeroSection extends HTMLElement {
         .hero-subtitle {
           font-family: '${this.settings.subtitleFontFamily}', sans-serif;
           font-size: ${this.settings.subtitleFontSize}px;
-          color: var(--subtitle-color);
+          color: #94a3b8;
           line-height: 1.6;
           margin-bottom: 3rem;
           max-width: 600px;
@@ -325,29 +402,31 @@ class TechHeroSection extends HTMLElement {
         }
 
         .btn-primary {
-          background: var(--primary-button-bg);
-          color: var(--primary-button-text);
-          border: 2px solid var(--primary-button-bg);
-          box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+          background: var(--primary-accent);
+          color: #ffffff;
+          border: 2px solid var(--primary-accent);
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
 
         .btn-primary:hover {
-          background: var(--primary-button-hover);
+          background: var(--vector-art-color);
+          border-color: var(--vector-art-color);
           transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+          box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
         }
 
         .btn-secondary {
           background: transparent;
-          color: var(--secondary-button-text);
-          border: 2px solid var(--secondary-button-border);
-          box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+          color: #ffffff;
+          border: 2px solid var(--border-color);
+          box-shadow: 0 0 20px rgba(51, 65, 85, 0.2);
         }
 
         .btn-secondary:hover {
-          background: var(--secondary-button-hover);
+          background: var(--secondary-accent);
+          border-color: var(--secondary-accent);
           transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+          box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
         }
 
         .features-grid {
@@ -359,8 +438,8 @@ class TechHeroSection extends HTMLElement {
         }
 
         .feature-card {
-          background: var(--card-background);
-          border: 1px solid var(--card-border);
+          background: var(--secondary-background);
+          border: 1px solid var(--border-color);
           border-radius: 20px;
           padding: 2rem;
           text-align: center;
@@ -398,7 +477,7 @@ class TechHeroSection extends HTMLElement {
 
         .feature-card:hover {
           transform: translateY(-5px);
-          border-color: var(--card-glow);
+          border-color: var(--vector-art-color);
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
@@ -419,13 +498,13 @@ class TechHeroSection extends HTMLElement {
           font-family: '${this.settings.titleFontFamily}', sans-serif;
           font-size: 1.25rem;
           font-weight: 600;
-          color: var(--title-color);
+          color: #ffffff;
           margin-bottom: 0.5rem;
         }
 
         .feature-subtitle {
           font-family: '${this.settings.subtitleFontFamily}', sans-serif;
-          color: var(--subtitle-color);
+          color: #94a3b8;
           font-size: 0.9rem;
         }
 
@@ -436,7 +515,7 @@ class TechHeroSection extends HTMLElement {
           transform: translate(-50%, -50%);
           width: 800px;
           height: 800px;
-          background: radial-gradient(circle, var(--card-glow) 0%, transparent 70%);
+          background: radial-gradient(circle, var(--vector-art-color) 0%, transparent 70%);
           opacity: 0.1;
           animation: glowPulse 4s ease-in-out infinite;
           display: ${this.settings.showGlowEffect ? 'block' : 'none'};
@@ -557,17 +636,17 @@ class TechHeroSection extends HTMLElement {
 
           <div class="features-grid">
             <div class="feature-card">
-              <div class="feature-icon">🤖</div>
+              <div class="feature-icon">${this.settings.feature1Icon}</div>
               <h3 class="feature-title">${this.settings.feature1Title}</h3>
               <p class="feature-subtitle">${this.settings.feature1Subtitle}</p>
             </div>
             <div class="feature-card">
-              <div class="feature-icon">📈</div>
+              <div class="feature-icon">${this.settings.feature2Icon}</div>
               <h3 class="feature-title">${this.settings.feature2Title}</h3>
               <p class="feature-subtitle">${this.settings.feature2Subtitle}</p>
             </div>
             <div class="feature-card">
-              <div class="feature-icon">🔒</div>
+              <div class="feature-icon">${this.settings.feature3Icon}</div>
               <h3 class="feature-title">${this.settings.feature3Title}</h3>
               <p class="feature-subtitle">${this.settings.feature3Subtitle}</p>
             </div>
@@ -584,12 +663,25 @@ class TechHeroSection extends HTMLElement {
       const container = this.shadowRoot.querySelector('.particles-container');
       if (!container) return;
 
+      // Clear existing particles
+      container.innerHTML = '';
+
       for (let i = 0; i < 20; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
+        
+        // Random horizontal position
         particle.style.left = Math.random() * 100 + '%';
+        
+        // Start from bottom of screen
+        particle.style.bottom = '-10px';
+        
+        // Random animation delay
         particle.style.animationDelay = Math.random() * 8 + 's';
+        
+        // Random animation duration
         particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        
         container.appendChild(particle);
       }
     }, 100);
@@ -600,9 +692,12 @@ class TechHeroSection extends HTMLElement {
     
     // Re-render for major changes
     if (['hero-title', 'hero-subtitle', 'primary-button-text', 'secondary-button-text',
-         'feature1-title', 'feature1-subtitle', 'feature2-title', 'feature2-subtitle',
-         'feature3-title', 'feature3-subtitle', 'hero-alignment', 'show-particles',
-         'show-floating-cards', 'show-glow-effect'].includes(name)) {
+         'feature1-title', 'feature1-subtitle', 'feature1-icon',
+         'feature2-title', 'feature2-subtitle', 'feature2-icon',
+         'feature3-title', 'feature3-subtitle', 'feature3-icon',
+         'hero-alignment', 'show-particles', 'show-floating-cards', 'show-glow-effect',
+         'gradient-preset', 'primary-background', 'secondary-background', 'border-color',
+         'vector-art-color', 'primary-accent', 'secondary-accent'].includes(name)) {
       this.render();
       if (name === 'show-particles') {
         this.initializeParticles();
