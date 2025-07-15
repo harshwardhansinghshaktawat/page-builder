@@ -19,17 +19,9 @@ class ECommerceHero extends HTMLElement {
       discountText: '50% OFF',
       discountSubtext: 'Summer Sale',
       
-      // Product Settings
-      productImage1: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      productImage2: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      productImage3: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      productName1: 'Premium Watch',
-      productName2: 'Wireless Headphones',
-      productName3: 'Smart Speaker',
-      productPrice1: '$299',
-      productPrice2: '$199',
-      productPrice3: '$149',
-      productRating: '4.8',
+      // Button Icon Settings
+      primaryButtonIcon: 'https://cdn-icons-png.flaticon.com/512/1170/1170678.png',
+      secondaryButtonIcon: 'https://cdn-icons-png.flaticon.com/512/709/709612.png',
       
       // Trust Indicators
       customerCount: '50,000+',
@@ -82,10 +74,7 @@ class ECommerceHero extends HTMLElement {
       buttonFontSize: 16,
       
       // Layout
-      heroAlignment: 'left',
-      showPromo: true,
-      showProducts: true,
-      showStats: true
+      heroAlignment: 'left'
     };
     
     this.scene = null;
@@ -104,9 +93,8 @@ class ECommerceHero extends HTMLElement {
     return [
       'hero-title', 'hero-subtitle', 'primary-button-text', 'secondary-button-text',
       'primary-button-link', 'secondary-button-link', 'primary-button-target', 'secondary-button-target',
+      'primary-button-icon', 'secondary-button-icon',
       'promo-text', 'promo-subtext', 'discount-text', 'discount-subtext',
-      'product-image1', 'product-image2', 'product-image3', 'product-name1', 'product-name2', 'product-name3',
-      'product-price1', 'product-price2', 'product-price3', 'product-rating',
       'customer-count', 'customer-label', 'review-count', 'review-label', 'brand-count', 'brand-label',
       'testimonial-text', 'testimonial-author', 'testimonial-role', 'testimonial-avatar',
       'enable-webgl', 'particle-count', 'animation-speed', 'camera-rotation', 'product-rotation',
@@ -114,8 +102,7 @@ class ECommerceHero extends HTMLElement {
       'success-color', 'warning-color', 'title-text-color', 'subtitle-text-color', 'primary-button-text-color',
       'secondary-button-text-color', 'price-text-color', 'promo-text-color', 'gradient-preset',
       'title-font-family', 'subtitle-font-family', 'button-font-family',
-      'title-font-size', 'subtitle-font-size', 'button-font-size', 'hero-alignment',
-      'show-promo', 'show-products', 'show-stats'
+      'title-font-size', 'subtitle-font-size', 'button-font-size', 'hero-alignment'
     ];
   }
 
@@ -390,7 +377,7 @@ class ECommerceHero extends HTMLElement {
         }
 
         .promo-banner {
-          display: ${this.settings.showPromo ? 'flex' : 'none'};
+          display: flex;
           align-items: center;
           gap: 1rem;
           margin-bottom: 2rem;
@@ -505,7 +492,9 @@ class ECommerceHero extends HTMLElement {
         }
 
         .btn-icon {
-          font-size: 1.1rem;
+          width: 18px;
+          height: 18px;
+          object-fit: contain;
         }
 
         .discount-badge {
@@ -536,7 +525,7 @@ class ECommerceHero extends HTMLElement {
         }
 
         .stats-grid {
-          display: ${this.settings.showStats ? 'grid' : 'none'};
+          display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 2rem;
           margin-bottom: 3rem;
@@ -578,61 +567,6 @@ class ECommerceHero extends HTMLElement {
           font-size: 0.9rem;
           color: var(--subtitle-text-color);
           font-weight: 500;
-        }
-
-        .products-showcase {
-          display: ${this.settings.showProducts ? 'grid' : 'none'};
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.5rem;
-          margin-bottom: 3rem;
-        }
-
-        .product-card {
-          background: var(--secondary-background);
-          border: 1px solid var(--border-color);
-          border-radius: 16px;
-          padding: 1.5rem;
-          text-align: center;
-          transition: all 0.3s ease;
-          animation: fadeInUp 1s ease-out;
-        }
-
-        .product-card:nth-child(2) { animation-delay: 0.2s; }
-        .product-card:nth-child(3) { animation-delay: 0.4s; }
-
-        .product-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .product-image {
-          width: 80px;
-          height: 80px;
-          border-radius: 12px;
-          object-fit: cover;
-          margin-bottom: 1rem;
-        }
-
-        .product-name {
-          font-weight: 600;
-          color: var(--title-text-color);
-          margin-bottom: 0.5rem;
-          font-size: 0.9rem;
-        }
-
-        .product-price {
-          font-weight: 700;
-          color: var(--price-text-color);
-          font-size: 1.1rem;
-        }
-
-        .product-rating {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.25rem;
-          margin-top: 0.5rem;
-          color: var(--warning-color);
         }
 
         .testimonial-card {
@@ -857,11 +791,6 @@ class ECommerceHero extends HTMLElement {
             text-align: center;
           }
 
-          .products-showcase {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-          }
-
           .testimonial-author {
             justify-content: center;
           }
@@ -906,20 +835,6 @@ class ECommerceHero extends HTMLElement {
             padding: 0.5rem 1rem;
           }
 
-          .products-showcase {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-          }
-
-          .product-card {
-            padding: 1rem;
-          }
-
-          .product-image {
-            width: 60px;
-            height: 60px;
-          }
-
           .testimonial-card {
             padding: 1.5rem;
           }
@@ -943,10 +858,6 @@ class ECommerceHero extends HTMLElement {
             font-size: 2rem;
           }
 
-          .products-showcase {
-            grid-template-columns: 1fr;
-          }
-
           .testimonial-card {
             padding: 1rem;
           }
@@ -955,13 +866,11 @@ class ECommerceHero extends HTMLElement {
 
       <main class="hero-container" role="main">
         <div class="hero-content">
-          ${this.settings.showPromo ? `
           <div class="promo-banner">
             <span class="promo-icon">🚚</span>
             <span>${this.settings.promoText}</span>
             <span style="opacity: 0.8;">${this.settings.promoSubtext}</span>
           </div>
-          ` : ''}
           
           <h1 class="hero-title">
             <span class="gradient-text">Discover</span> ${this.settings.heroTitle.replace('Discover', '')}
@@ -970,16 +879,15 @@ class ECommerceHero extends HTMLElement {
           
           <div class="hero-buttons">
             <a href="${this.settings.primaryButtonLink}" target="${this.settings.primaryButtonTarget}" class="btn btn-primary">
-              <span class="btn-icon">🛒</span>
+              <img src="${this.settings.primaryButtonIcon}" alt="Icon" class="btn-icon">
               ${this.settings.primaryButtonText}
             </a>
             <a href="${this.settings.secondaryButtonLink}" target="${this.settings.secondaryButtonTarget}" class="btn btn-secondary">
-              <span class="btn-icon">👁️</span>
+              <img src="${this.settings.secondaryButtonIcon}" alt="Icon" class="btn-icon">
               ${this.settings.secondaryButtonText}
             </a>
           </div>
 
-          ${this.settings.showStats ? `
           <div class="stats-grid">
             <div class="stat-item">
               <span class="stat-number">${this.settings.customerCount}</span>
@@ -994,39 +902,6 @@ class ECommerceHero extends HTMLElement {
               <span class="stat-label">${this.settings.brandLabel}</span>
             </div>
           </div>
-          ` : ''}
-
-          ${this.settings.showProducts ? `
-          <div class="products-showcase">
-            <div class="product-card">
-              <img src="${this.settings.productImage1}" alt="${this.settings.productName1}" class="product-image">
-              <div class="product-name">${this.settings.productName1}</div>
-              <div class="product-price">${this.settings.productPrice1}</div>
-              <div class="product-rating">
-                <span>⭐</span>
-                <span>${this.settings.productRating}</span>
-              </div>
-            </div>
-            <div class="product-card">
-              <img src="${this.settings.productImage2}" alt="${this.settings.productName2}" class="product-image">
-              <div class="product-name">${this.settings.productName2}</div>
-              <div class="product-price">${this.settings.productPrice2}</div>
-              <div class="product-rating">
-                <span>⭐</span>
-                <span>${this.settings.productRating}</span>
-              </div>
-            </div>
-            <div class="product-card">
-              <img src="${this.settings.productImage3}" alt="${this.settings.productName3}" class="product-image">
-              <div class="product-name">${this.settings.productName3}</div>
-              <div class="product-price">${this.settings.productPrice3}</div>
-              <div class="product-rating">
-                <span>⭐</span>
-                <span>${this.settings.productRating}</span>
-              </div>
-            </div>
-          </div>
-          ` : ''}
 
           <div class="testimonial-card">
             <p class="testimonial-text">${this.settings.testimonialText}</p>
@@ -1071,17 +946,6 @@ class ECommerceHero extends HTMLElement {
           }, 200);
         }, index * 200);
       });
-
-      // Initialize product card hover effects
-      const productCards = this.shadowRoot.querySelectorAll('.product-card');
-      productCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-          card.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        card.addEventListener('mouseleave', () => {
-          card.style.transform = 'translateY(0) scale(1)';
-        });
-      });
     }, 1000);
   }
 
@@ -1090,8 +954,8 @@ class ECommerceHero extends HTMLElement {
     
     // Re-render for major changes
     if (['hero-title', 'hero-subtitle', 'primary-button-text', 'secondary-button-text',
-         'product-image1', 'product-image2', 'product-image3', 'enable-webgl',
-         'show-promo', 'show-products', 'show-stats', 'gradient-preset'].includes(name)) {
+         'primary-button-icon', 'secondary-button-icon', 'enable-webgl',
+         'gradient-preset'].includes(name)) {
       this.render();
       this.initializeWebGL();
       this.initializeAnimations();
